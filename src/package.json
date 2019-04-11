@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/MetaZ9/JdR-bot#readme",
   "dependencies": {
-    "discord.js": "^11.4.2"
+    "discord.js": "^11.4.2",
+    "fs": "0.0.1-security"
   }
 }
