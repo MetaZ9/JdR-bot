@@ -1,0 +1,23 @@
+{
+  "name": "gabriel",
+  "version": "0.0.0",
+  "description": "Bot for RPG on Discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MetaZ9/JdR-bot.git"
+  },
+  "keywords": [
+    "Discord",
+    "RPG"
+  ],
+  "author": "Tonio & Méta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MetaZ9/JdR-bot/issues"
+  },
+  "homepage": "https://github.com/MetaZ9/JdR-bot#readme"
+}
