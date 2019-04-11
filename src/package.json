@@ -24,6 +24,7 @@
     "discord.js": "^11.4.2",
     "fs": "0.0.1-security",
     "lodash": "^4.17.11",
-    "mongodb": "^3.2.3"
+    "mongodb": "^3.2.3",
+    "ytdl": "^0.11.1"
   }
 }
