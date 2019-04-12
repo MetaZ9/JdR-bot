@@ -14,7 +14,16 @@
     "Discord",
     "RPG"
   ],
-  "author": "Tonio & Méta",
+  "author": {
+    "name": "Jason Cheneau",
+    "email": "ja1995@hotmail.fr",
+    "url": "https://github.com/MetaZ9"
+  },
+  "contributors": [{
+    "name": "Muhammad Kassar",
+    "email": "n_tonio36.poke@outlook.com",
+    "url": "https://github.com/mk360"
+  }],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MetaZ9/JdR-bot/issues"
