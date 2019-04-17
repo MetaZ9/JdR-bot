@@ -621,7 +621,7 @@ rps.json<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:M
         <node id="n5::n9">
           <data key="d6">
             <y:GenericNode configuration="com.yworks.bpmn.Event.withShadow">
-              <y:Geometry height="30.0" width="30.0" x="-728.1671666566842" y="390.81389396421366"/>
+              <y:Geometry height="30.0" width="30.0" x="-724.9944251267298" y="390.81389396421366"/>
               <y:Fill color="#FFFFFFE6" color2="#FFFFFF" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="10.673828125" x="9.6630859375" xml:space="preserve" y="5.6494140625">1<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
