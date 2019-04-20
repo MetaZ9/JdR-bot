@@ -7,13 +7,13 @@
 		"node": true,
 	},
 	"rules": {
-		"no-undefined": "warning",
-		"no-self-compare": "warning",
+		"no-undefined": "warn",
+		"no-self-compare": "warn",
 		"no-with": "error",
-		"yoda": "warning",
-		"comma-spacing": ["warning", {"before": false, "after": true}],
+		"yoda": "warn",
+		"comma-spacing": ["warn", {"before": false, "after": true}],
 		"no-invalid-this": "error",
-		"no-multiple-empty-lines": ["warning", {"max": 2, "maxEOF": 1}],
+		"no-multiple-empty-lines": ["warn", {"max": 2, "maxEOF": 1}],
 		"no-mixed-spaces-and-tabs": ["error", "smart-tabs"]
 	}
 }
