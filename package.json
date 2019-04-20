@@ -19,11 +19,13 @@
     "email": "ja1995@hotmail.fr",
     "url": "https://github.com/MetaZ9"
   },
-  "contributors": [{
-    "name": "Muhammad Kassar",
-    "email": "n_tonio36.poke@outlook.com",
-    "url": "https://github.com/mk360"
-  }],
+  "contributors": [
+    {
+      "name": "Muhammad Kassar",
+      "email": "n_tonio36.poke@outlook.com",
+      "url": "https://github.com/mk360"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MetaZ9/JdR-bot/issues"
@@ -36,5 +38,9 @@
     "lodash": "^4.17.11",
     "mongodb": "^3.2.3",
     "ytdl": "^0.11.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-defaults": "^9.0.0"
   }
 }
