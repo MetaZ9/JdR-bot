@@ -7,7 +7,7 @@ class Rule {
 	constructor() {
 		this.ruleName = '';
 		this.isHidden = true;
-		this.minGrade = Grades.ADMIN
+		this.minGrade = Grades.ADMIN;
 		this.ruleCore = {};
 		this.callback = function() {};
 	}
@@ -35,7 +35,7 @@ class Rule {
 					callback: this.callback
 				});
 			} else {
-				Database.collection(auth.dbCollections.rules).findOne({ ruleName: name}).then((error, rule) => {
+				Database.collection(auth.dbCollections.rules).findOne({ruleName: name}).then((error, rule) => {
 					if (error) {
 						throw error;
 					}
