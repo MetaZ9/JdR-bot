@@ -1,0 +1,113 @@
+{
+	"contentTypes" : {
+		"Character" : {
+			"given name" : "String",
+			"surname" : "String",
+			"middle name" : "String",
+//other demographic infos + description + personnality (?)
+			"caracteristics" : "Caracteristic[]",
+			"characterClass" : "CharacterClass",
+			"statistics" : {
+				"technic" : "Integer 0 30",
+				"intelligence" : "Integer 0 30",
+				"empathy" : "Integer 0 30",
+				"pragmatic" : "Integer 0 30",
+				"mental" : "Integer 0 30",
+				"perception" : "Integer 0 30"
+			},
+			"stat bonuses" : {
+				"technic" : "Integer -5 10",
+				"intelligence" : "Integer -5 10",
+				"empathy" : "Integer -5 10",
+				"pragmatic" : "Integer -5 10",
+				"mental" : "Integer -5 10",
+				"perception" : "Integer -5 10"
+			},
+			"inventory" : "Item|Number",
+			"money" : "Integer 0 false",
+			"companion" : "Companion"
+		},
+
+		"Species" : {
+			"name" : "String",
+			"baseStats" : {
+				"Vitality" : "Integer 0 false",
+				"Strenght" : "Integer 0 false",
+				"Constitution" : "Integer 0 false",
+				"Will" : "Integer 0 false",
+				"Mind" : "Integer 0 false",
+				"Dexterity" : "Integer 0 false",
+			},
+			"statGain" : {
+				"Vitality" : "Integer 0 false",
+				"Strenght" : "Integer 0 3",
+				"Constitution" : "Integer 0 3",
+				"Will" : "Integer 0 3",
+				"Mind" : "Integer 0 3",
+				"Dexterity" : "Integer 0 3",
+			},
+			"types" : {
+				"1" : "Type",
+				"2" : "Type"
+			},
+			"talents" : "Talent[]",
+			"hiddenTalents" : "Talent[]",
+			"xpClass" : "ExperienceClass",
+			"xpYield" : "Integer 0",
+			"skills" : "String[]",
+			"learnedMoves" : "Integer|Move[]",
+			"eggMoves" : "Move[]",
+			"otherMoves" : "Move[]",
+			"evolutions" : [{
+				"target" : "Species",
+				"type" : "EvolutionType",
+				"param1" : "String",
+				"param2" : "String"
+			}],
+			"forms" : "lol"
+		},
+
+		"Companion" : {
+			"name" : "String",
+			"species" : "Species",
+			"individualValues" : {
+				"Vitality" : "Integer 0 15",
+				"Strenght" : "Integer 0 3",
+				"Constitution" : "Integer 0 3",
+				"Will" : "Integer 0 3",
+				"Mind" : "Integer 0 3",
+				"Dexterity" : "Integer 0 3",
+			},
+			"gender" : "String",
+			"level" : "Integer 0 20",
+			"xp" : "Integer 0 false",
+			"stats" : {
+				"Vitality" : "Integer 0 false",
+				"Strenght" : "Integer 0 false",
+				"Constitution" : "Integer 0 false",
+				"Will" : "Integer 0 false",
+				"Mind" : "Integer 0 false",
+				"Dexterity" : "Integer 0 false",
+			},
+			"statBonuses" : {
+				"Strenght" : "Integer 0 9",
+				"Constitution" : "Integer 0 9",
+				"Will" : "Integer 0 9",
+				"Mind" : "Integer 0 9",
+				"Dexterity" : "Integer 0 3",
+			},
+			"battleStats" : {
+				"physicalEvasion" : "",
+				"magicalEvasion" : "",
+				"physicalPrecision" : "",
+				"magicalPrecision" : ""
+			},
+			"heldItem" : "Item",
+			"moves" : "Move[4]",
+			"skills" : "String[]",
+			"nature" : "Nature[]"
+		}
+
+	}
+
+}
