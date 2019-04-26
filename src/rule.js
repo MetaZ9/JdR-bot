@@ -144,11 +144,10 @@ class Rule {
 			throw Error("Rule core must be an object.");
 		}
 
-		if (typeof this.callback !== "function") {
+		if (typeof rule.callback !== "function") {
 			throw Error("Callback must be a function.");
 		}
-
-		return true; // all checks passed
+		return true;
 	}
 }
 
