@@ -17,7 +17,7 @@ class Rule {
 			return new Promise((resolve, reject) => {
 				Database.collection(auth.dbCollections.rules).findAndModify({
 					query: {_id: name},
-					replace: formatRule(newRule),
+					replace: this.formatRule(newRule),
 					new: resolveNewRule
 				}).then((error, rule) => {
 					if (error) {
