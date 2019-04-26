@@ -3,3 +3,5 @@ const Grades = {
 	GAMEMASTER : 2,
 	ADMIN : 1
 };
+
+module.exports = Grades;
