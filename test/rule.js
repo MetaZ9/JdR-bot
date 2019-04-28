@@ -41,11 +41,21 @@ describe("Rule class", () => {
 			}
 		};
 
-		expect(Rule.validateRule(messedRule1)).toThrow(new Error("Rule name must be a string."));
-		expect(Rule.validateRule(messedRule2)).toThrow(new Error("Whether a rule is hidden or not must be a boolean."))
-		expect(Rule.validateRule(messedRule3)).toThrow(new Error("Minimal Grade must be an integer."));
-		expect(Rule.validateRule(messedRule4)).toThrow(new Error("Rule core must be an object."));
-		expect(Rule.validateRule(messedRule5)).toThrow(new Error("Callback must be a function.");
+		expect(function() {
+			Rule.validateRule(messedRule1);
+		}).toThrow();
+		expect(function() {
+			Rule.validateRule(messedRule2);
+		}).toThrow();
+		expect(function() {
+			Rule.validateRule(messedRule3);
+		}).toThrow();
+		expect(function() {
+			Rule.validateRule(messedRule4);
+		}).toThrow();
+		expect(function() {
+			Rule.validateRule(messedRule5);
+		}).toThrow();
 		expect(Rule.validateRule(validRule)).toBe(true);
 	});
 });
