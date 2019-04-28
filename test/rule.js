@@ -1,6 +1,18 @@
 const Rule = require("./../src/rule.js");
 
 describe("Rule class", () => {
+	let compliantRule = {
+			ruleName: "bruh",
+			minGrade: 5,
+			isHidden: true,
+			ruleCore: {
+				bruh: "x"
+			},
+			callback: function() {
+
+			}
+		};
+
 	it("should invalidate invalid rule objects", () => {
 		let messedRule1 = {
 			ruleName: 36
@@ -29,17 +41,6 @@ describe("Rule class", () => {
 			},
 			callback: "call me maybe"
 		};
-		let validRule = {
-			ruleName: "yes we can",
-			isHidden: true,
-			minGrade: 200000,
-			ruleCore: {
-				s: "s"
-			},
-			callback: function() {
-				console.log("bruh");
-			}
-		};
 
 		expect(function() {
 			Rule.validateRule(messedRule1);
@@ -56,6 +57,13 @@ describe("Rule class", () => {
 		expect(function() {
 			Rule.validateRule(messedRule5);
 		}).toThrow();
-		expect(Rule.validateRule(validRule)).toBe(true);
+		expect(Rule.validateRule(compliantRule)).toBe(true);
+	});
+
+	it("properly format a rule", () => {
+		let {ruleName} = compliantRule;
+		let newRules = Rule.formatRule(compliantRule);
+		expect(newRules._id).toBe(ruleName);
+		expect(newRules.ruleName).toBeFalsy();
 	});
 });
