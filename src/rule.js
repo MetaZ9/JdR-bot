@@ -13,9 +13,10 @@ class Rule {
 	}
 
 	static alterRule(name, newRule, resolveNewRule = true) {
-		if (this.validateRule(newRule)) {
+		let isValid = this.validateRule(newRule);
+		if (isValid) {
 			return new Promise((resolve, reject) => {
-				Database.collection(auth.dbCollections.rules).findAndModify({
+				Database.db(auth.dbName).collection(auth.dbCollections.rules).findAndModify({
 					query: {_id: name},
 					replace: this.formatRule(newRule),
 					new: resolveNewRule
@@ -29,7 +30,10 @@ class Rule {
 					// applying "true" to the "new" parameter forces mongodb to return the updated document
 				});
 			});
+		} else {
+			throw isValid;
 		}
+
 	}
 
 	static cacheRule(rule) {
@@ -42,9 +46,12 @@ class Rule {
 	}
 
 	static createRule(rule) {
-		if (this.validateRule(rule)) {
+		let isValid = this.validateRule(rule);
+
+		if (isValid) {
 			return this.setRule(rule);
 		} else {
+			throw isValid;
 			// report error
 			// The rule could not be created
 			// We could log into console or
@@ -55,7 +62,7 @@ class Rule {
 
 	static deleteRule(name) {
 		return new Promise((resolve, reject) => {
-			Database.collection(auth.dbCollections.rules).deleteOne({_id: name}).then((error, deleted) => {
+			Database.db(auth.dbName).collection(auth.dbCollections.rules).deleteOne({_id: name}).then((error, deleted) => {
 				if (error) {
 					throw error;
 				}
@@ -85,7 +92,7 @@ class Rule {
 					callback: this.callback
 				});
 			} else {
-				Database.collection(auth.dbCollections.rules).findOne({_id: name}).then((error, rule) => {
+				Database.db(auth.dbName).collection(auth.dbCollections.rules).findOne({_id: name}).then((error, rule) => {
 					if (error) {
 						throw error;
 					}
@@ -118,7 +125,7 @@ class Rule {
 	static setRule(rule) {
 		const toInsert = this.formatRule(Object.assign({}, rule));
 		return new Promise((resolve, reject) => {
-			Database.collection(auth.dbCollections.rules).insertOne(toInsert).then((error, inserted) => {
+			Database.db(auth.dbName).collection(auth.dbCollections.rules).insertOne(toInsert).then((error, inserted) => {
 				if (error) {
 					throw error;
 				}
