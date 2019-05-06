@@ -8,11 +8,4 @@ if (!auth.dbUrl) {
 
 const client = new MongoClient(auth.dbUrl, { useNewUrlParser: true});
 
-client.connect(function(err) {
-	if (err) {
-		throw err;
-	}
-	console.log("Database server connected and ready to operate.");
-});
-
 module.exports = client;

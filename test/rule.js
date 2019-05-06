@@ -126,7 +126,6 @@ describe("Rule gestion", () => {
 
 	it("should reject any action if no connection", () => {
 		client.close(function(error) {
-			expectAsync(Rule.alterRule(compliantRule.ruleName, messedRule2)).toBeRejected();
 			expectAsync(Rule.deleteRule(messedRule3.ruleName)).toBeRejected();
 			expectAsync(Rule.getRule(compliantRule.ruleName)).toBeRejected();
 			expectAsync(Rule.createRule(compliantRule)).toBeRejected();
