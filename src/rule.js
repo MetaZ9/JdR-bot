@@ -149,6 +149,8 @@ class Rule {
 		if (typeof rule.callback !== "function") {
 			throw Error("Callback must be a function.");
 		}
+
+		return true;
 	}
 }
 
