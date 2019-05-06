@@ -13,27 +13,22 @@ class Rule {
 	}
 
 	static alterRule(name, newRule, resolveNewRule = true) {
-		let isValid = this.validateRule(newRule);
-		if (isValid) {
-			return new Promise((resolve, reject) => {
-				Database.db(auth.dbName).collection(auth.dbCollections.rules).findAndModify({
-					query: {_id: name},
-					replace: this.formatRule(newRule),
-					new: resolveNewRule
-				}).then((error, rule) => {
-					if (error) {
-						throw error;
-					}
+		this.validateRule(newRule);
+		return new Promise((resolve, reject) => {
+			Database.db(auth.dbName).getCollection(auth.dbCollections.rules).findAndModify({
+				query: {_id: name},
+				replace: this.formatRule(newRule),
+				new: resolveNewRule
+			}).then((error, rule) => {
+				if (error) {
+					throw error;
+				}
 
-					resolve(rule);
-					// https://docs.mongodb.com/manual/reference/method/db.collection.findAndModify/#db.collection.findAndModify
-					// applying "true" to the "new" parameter forces mongodb to return the updated document
-				});
+				resolve(rule);
+				// https://docs.mongodb.com/manual/reference/method/db.getCollection.findAndModify/#db.getCollection.findAndModify
+				// applying "true" to the "new" parameter forces mongodb to return the updated document
 			});
-		} else {
-			throw isValid;
-		}
-
+		});
 	}
 
 	static cacheRule(rule) {
@@ -62,7 +57,7 @@ class Rule {
 
 	static deleteRule(name) {
 		return new Promise((resolve, reject) => {
-			Database.db(auth.dbName).collection(auth.dbCollections.rules).deleteOne({_id: name}).then((error, deleted) => {
+			Database.db(auth.dbName).getCollection(auth.dbCollections.rules).deleteOne({_id: name}).then((error, deleted) => {
 				if (error) {
 					throw error;
 				}
@@ -92,7 +87,7 @@ class Rule {
 					callback: this.callback
 				});
 			} else {
-				Database.db(auth.dbName).collection(auth.dbCollections.rules).findOne({_id: name}).then((error, rule) => {
+				Database.db(auth.dbName).getCollection(auth.dbCollections.rules).findOne({_id: name}).then((error, rule) => {
 					if (error) {
 						throw error;
 					}
@@ -123,9 +118,9 @@ class Rule {
 	}
 
 	static setRule(rule) {
-		const toInsert = this.formatRule(Object.assign({}, rule));
+		const toInsert = this.formatRule(rule);
 		return new Promise((resolve, reject) => {
-			Database.db(auth.dbName).collection(auth.dbCollections.rules).insertOne(toInsert).then((error, inserted) => {
+			Database.db(auth.dbName).getCollection(auth.dbCollections.rules).insertOne(toInsert).then((error, inserted) => {
 				if (error) {
 					throw error;
 				}
@@ -154,7 +149,6 @@ class Rule {
 		if (typeof rule.callback !== "function") {
 			throw Error("Callback must be a function.");
 		}
-		return true;
 	}
 }
 
