@@ -51,6 +51,8 @@ function parse(token) {
 				let stat;
 
 				for (var i = 1; i < args.length; i++) {
+					//small improvement : check if variable is already set and send a warning ?
+
 					if (isNaN(args[i]))
 						threshold = args[i];
 					else if (args[i].startsWith("+") || args[i].startsWith("-"))
