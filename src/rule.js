@@ -9,7 +9,7 @@ class Rule {
 		this.isHidden = true;
 		this.minGrade = Grades.ADMIN;
 		this.ruleCore = {};
-		this.callback = function() {};
+		this.callback = '';
 	};
 };
 
@@ -115,8 +115,8 @@ Rule.prototype.validateRule = function(rule) {
 		throw Error("Rule core must be an object.");
 	}
 
-	if (typeof rule.callback !== "function") {
-		throw Error("Callback must be a function.");
+	if (typeof rule.callback !== "string") {
+		throw Error("Callback must be a string.");
 	}
 };
 
