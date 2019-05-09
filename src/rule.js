@@ -89,6 +89,23 @@ Rule.prototype.getRule = function(name) {
 	});
 };
 
+//J'ai juste fait ça pour que ça marche, faudra complètement la repenser x)
+//Est-ce qu'on ferait pas un query manager ? Je pense que ça sera le mieux
+Rule.prototype.getAllRules = function(param) {
+	return new Promise((resolve, reject) => {
+		Database.db(auth.dbName).collection(auth.dbCollections.rules).find({isHidden: false}).then((error, rules) => {
+			if (error) {
+				throw error;
+			}
+
+			//this.cacheRule(rule);
+			resolve(rules);
+		});
+
+	});
+
+};
+
 Rule.prototype.setRule = function(rule) {
 	const toInsert = this.formatRule(rule);
 	return new Promise((resolve, reject) => {
