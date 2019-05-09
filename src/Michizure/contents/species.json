@@ -1,0 +1,76 @@
+[
+    {
+        "name": "Bulbizarre",
+        "types": [
+            "GRASS",
+            "POISON"
+        ],
+        "stats": {
+            "Vitality" : "45",
+            "Strenght" : "49",
+            "Constitution" : "49",
+            "Will" : "65",
+            "Mind" : "65",
+            "Dexterity" : "45"
+        },
+        "genderRate": "Female_125",
+        "growthRate": "Parabolic",
+        "baseExp": 64,
+        "effortPoints": {
+            "Vitality" : "0",
+            "Strenght" : "0",
+            "Constitution" : "0",
+            "Will" : "1",
+            "Mind" : "0",
+            "Dexterity" : "0"
+        },
+        "abilities": [
+            "OVERGROW"
+        ],
+        "hiddenAbilities": [
+            "CHLOROPHYLL"
+        ],
+        "moves": {
+            "1": "TACKLE",
+            "3": "GROWL",
+            "7": "LEECHSEED",
+            "9": "VINEWHIP",
+            "13": "SLEEPPOWDER",
+            "15": "TAKEDOWN",
+            "19": "RAZORLEAF",
+            "21": "SWEETSCENT",
+            "25": "GROWTH",
+            "27": "DOUBLEEDGE",
+            "31": "WORRYSEED",
+            "33": "SYNTHESIS",
+            "37": "SEEDBOMB"
+        },
+        "eggMoves": [
+            "AMNESIA",
+            "CHARM",
+            "CURSE",
+            "ENDURE",
+            "GIGADRAIN",
+            "GRASSWHISTLE",
+            "GRASSYTERRAIN",
+            "INGRAIN",
+            "LEAFSTORM",
+            "MAGICALLEAF",
+            "NATUREPOWER",
+            "PETALDANCE",
+            "POWERWHIP",
+            "SKULLBASH",
+            "SLUDGE"
+        ],
+        "height": 0.7,
+        "weight": 6.9,
+        "evolutions": [
+            {
+                "target": "IVYSAUR",
+                "type": "Level",
+                "paramX": "16"
+            }
+        ],
+        "forms": []
+    }
+]

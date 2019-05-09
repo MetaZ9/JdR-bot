@@ -1,0 +1,16 @@
+[
+	{
+		"name" : "Acier",
+		"efficient" : [
+			"Glace",
+			"Roche",
+			"Acier"
+		],
+		"inefficient" : [
+			"Electrique",
+			"Feu",
+			"Acier",
+			"Eau"
+		]
+	}
+]

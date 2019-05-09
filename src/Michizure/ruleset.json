@@ -23,14 +23,14 @@
 				"mental" : "Integer -5 10",
 				"perception" : "Integer -5 10"
 			},
-			"inventory" : "Item|Number",
+			"inventory" : "Item|Integer 0 false|Integer 0 false",
 			"money" : "Integer 0 false",
 			"companion" : "Companion"
 		},
 
 		"Species" : {
 			"name" : "String",
-			"baseStats" : {
+			"stats" : {
 				"Vitality" : "Integer 0 false",
 				"Strenght" : "Integer 0 false",
 				"Constitution" : "Integer 0 false",
@@ -38,7 +38,7 @@
 				"Mind" : "Integer 0 false",
 				"Dexterity" : "Integer 0 false",
 			},
-			"statGain" : {
+			"effortPoints" : {
 				"Vitality" : "Integer 0 false",
 				"Strenght" : "Integer 0 3",
 				"Constitution" : "Integer 0 3",
@@ -46,12 +46,9 @@
 				"Mind" : "Integer 0 3",
 				"Dexterity" : "Integer 0 3",
 			},
-			"types" : {
-				"1" : "Type",
-				"2" : "Type"
-			},
-			"talents" : "Talent[]",
-			"hiddenTalents" : "Talent[]",
+			"types" : "Type[2]",
+			"abilities" : "Talent[]",
+			"hiddenAbilities" : "Talent[]",
 			"xpClass" : "ExperienceClass",
 			"xpYield" : "Integer 0",
 			"skills" : "String[]",
@@ -102,12 +99,67 @@
 				"physicalPrecision" : "",
 				"magicalPrecision" : ""
 			},
+			"battleModifiers" : {
+				"Vitality" : "Integer -6 6",
+				"Strenght" : "Integer -6 6",
+				"Constitution" : "Integer -6 6",
+				"Will" : "Integer -6 6",
+				"Mind" : "Integer -6 6",
+				"Dexterity" : "Integer -6 6",
+				"physicalEvasion" : "Integer -6 6",
+				"magicalEvasion" : "Integer -6 6",
+				"physicalPrecision" : "Integer -6 6",
+				"magicalPrecision" : "Integer -6 6"
+			},
 			"heldItem" : "Item",
 			"moves" : "Move[4]",
 			"skills" : "String[]",
 			"nature" : "Nature[]"
+		},
+
+		"Characteristic" : {
+
+		},
+
+		"CharacterClass" : {
+
+		},
+
+		"Item" : {
+
+		},
+
+		"Type" : {
+
+		},
+
+		"Talent" : {
+
+		},
+
+		"ExperienceClass" : {
+
+		},
+
+		"Move" : {
+
+		},
+
+		"EvolutionType" : {
+
+		},
+
+	},
+	"useMove" : {
+		"idHidden" : "false",
+		"minGrade" : "1",
+		"ruleCore" : {
+			"caputres" : {
+				"a" : "move."
+			}
+		},
+		"callbacks" : {
+			
 		}
-
 	}
-
 }
