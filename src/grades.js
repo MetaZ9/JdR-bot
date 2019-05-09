@@ -1,7 +1,7 @@
 const Grades = {
-	ROLIST : 3,
+	ROLIST : 1,
 	GAMEMASTER : 2,
-	ADMIN : 1
+	ADMIN : 3
 };
 
 module.exports = Grades;
