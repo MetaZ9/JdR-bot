@@ -1,5 +1,5 @@
 const {Client} = require("discord.js");
-const config = require("./config.json");
+const config = require("./auth.json");
 const Gabriel = new Client();
 
 Gabriel.on("message", message => {
@@ -7,10 +7,10 @@ Gabriel.on("message", message => {
 	let channel = message.channel;
 
 	if (rawCommand.startsWith("g!")) {
+		parse(message);
 		message.channel.send("pouet");
 
 		let command = rawCommand.substring(2, rawCommand.indexOf(' '));
-		parse(command);
 	}
 });
 

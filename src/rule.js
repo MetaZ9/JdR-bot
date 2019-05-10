@@ -103,7 +103,6 @@ Rule.prototype.getAllRules = function(param) {
 		});
 
 	});
-
 };
 
 Rule.prototype.setRule = function(rule) {
