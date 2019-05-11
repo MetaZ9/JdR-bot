@@ -18,50 +18,57 @@ function calculateDice(throwSettings, comparedStat) {
 };
 
 function generateDice() {
-	let throwSettings = {};
-	if (!arguments.length) {
+	let args = Array.from(arguments);
+	if (!args.length) {
 		// gérer une erreur
 	}
-	let rawDiceData = arguments[0].split("d");
+
+	let rawDiceData = args[0].split("d");
+
 	if (rawDiceData.length !== 2) {
 		// gérer une erreur
 	}
+
 	let [rollTimes, maxFaces] = rawDiceData;
+	let throwSettings = {
+		rollTimes, maxFaces
+	};
+
 	if (isNaN(rollTimes) || isNaN(maxFaces)) {
 		// gérer une erreur
 	}
+
 	if (!rollTimes || !maxFaces) { 
 		// gérer une erreur
 		// parce que bon, 0d5 à quoi ça sert franchement
 	}
 
-	if (arguments.length > 1) {
-		throwSettings.rollTimes = rollTimes;
-		throwSettings.maxFaces = maxFaces;
-		for (let i = 0; i < args.length; i++) {
-			if (+args[i]) {
-				throwSettings.threshold = args[i];
-			} else if ((args[i].startsWith("+") || args[i].startsWith("-"))
-						&& +args[i]) {
-				throwSettings.mod = +args[i];
-			} else {
-				throwSettings.stat = args[i];
-			}
-		}
-
-		if (!throwSettings.mod || !throwSettings.threshold) {
-			// erreur comme quoi il manque un argument nécessaire pour la comparaison
-		}
+	if (args.length > 1) {
+		throwSettings = Object.assign(throwSettings, setThrowSettings(args));
 	}
 
-	return throwDices(throwSettings);
+	return throwDice(throwSettings);
 };
 
 function generateNumber(faces, minValue, mod, comparedStat) {
 	return Math.floor(Math.random() * (faces + 1 - minValue)) + minValue + mod - comparedStat;
 };
 
-function throwDices(throwSettings) {
+function setThrowSettings(args) {
+	for (let arg of args) {
+		if ((arg.startsWith("+") || arg.startsWith("-"))
+			&& +arg) {
+			obj.mod = +arg;
+		} else if (+arg) {
+			obj.threshold = arg;
+		} else {
+			obj.stat = arg;
+		}
+	}
+	return obj;
+};
+
+function throwDice(throwSettings) {
 	return new Promise((resolve, reject) => {
 		if (throwSettings.stat) {
 			if (currentRPG) {
