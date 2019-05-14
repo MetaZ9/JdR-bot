@@ -33,20 +33,13 @@ AbstractContent.prototype.alter = function(name, newContent, collectionName, res
 	});
 };
 
-AbstractContent.prototype.get = function(name, collectionName) {
+AbstractContent.prototype.get = function(contentName, collectionName) {
 	return new Promise((resolve, reject) => {
-		if (name === this.name) {
-			resolve(assign()
-			/*{
-				//assign values ?
-				_id: this.ruleName,
-				isHidden: this.isHidden,
-				minGrade: this.minGrade,
-				ruleCore: this.ruleCore,
-				callback: this.callback
-			}*/);
+		let {name, ruleName} = this.fetchProperties();
+		if ([ruleName, name].includes(contentName)) {
+			resolve(this.fetchProperties());
 		} else {
-			Database.db(auth.dbName).collection(collectionName).findOne({_id: name}).then((error, content) => {
+			Database.db(auth.dbName).collection(collectionName).findOne({_id: contentName}).then((error, content) => {
 				if (error) {
 					throw error;
 				}

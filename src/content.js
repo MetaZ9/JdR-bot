@@ -1,76 +1,73 @@
-const Database = require('./database.js');
-const auth = require('./auth.json');
+const collectionName = require('./auth.json').dbCollections.content;
+const AbstractContent = require('./absContent.js');
 
-class Content {
+class Content extends AbstractContent {
 	constructor() {
+		super();
 		this.ruleDefinedVars = {};
-	}
+	};
+};
 
-	static alterContent(name, newContent, resolveNewContent = true) {
-		return new Promise((resolve, reject) => {
-			Database.collection(auth.collections.content).findAndModify({
-				query: {_id: name},
-				replace: this.formatContent(newContent),
-				new: resolveNewContent,
-			}).then((error, content) => {
-				if (error) {
-					throw error;
-				}
-				resolve(content);
-			});
-		});
-	}
+Content.prototype.fetchProperties = function() {
+	return this.ruleDefinedVars;
+};
 
-	static createContent(content) {
-		return new Promise((resolve, reject) => {
-			const toInsert = this.formatContent(content);
-			Database.collection(auth.collections.content).insertOne(toInsert).then((error, content) => {
-				if (error) {
-					throw error;
-				}
-				resolve(content);
-			});
-		});
-	}
+Content.prototype.alterContent = function(name, newContent, resolveNewContent = true) {
+	return this.alter(name, newContent, collectionName, resolveNewContent);
+};
 
-	static deleteContent(name) {
-		return new Promise((resolve, reject) => {
-			Database.collection(auth.collections.content).deleteOne({_id: name}).then((error, content) => {
-				if (error) {
-					throw error;
-				}
-				resolve(Boolean(content.deletedCount));
-			})
-		})
-	}
+Content.prototype.cache = function(content) {
+	let decodedContent = reverseFormat(content);
+	this.ruleDefinedVars = decodedContent;
+};
 
-	static formatContent(content) {
-		let toFormat = Object.assign({}, content);
-		toFormat._id = toFormat.name;
-		delete toFormat.name;
-		return toFormat;
-	}
+Content.prototype.createContent = function(content) {
+	return this.create(content, collectionName);
+};
 
-	static getContent(name) {
-		return new Promise((resolve, reject) => {
-			Database.collection(auth.collections.content).findOne({_id: name}).then((error, content) => {
-				if (error) {
-					throw error;
-				}
-				resolve(content);
-			});
-		})
-	}
+Content.prototype.deleteContent = function(name) {
+	return this.delete(name, collectionName);
+};
 
-	static setContent(content) {
-		if (this.validateContent(content)) {
-			this.createContent(content);
-		}
-	}
+Content.prototype.getContent = function(name) {
+	return this.get(name, collectionName);
+};
 
-	static validateContent(content) {
-		return "name" in content; // force content to have a name
+Content.prototype.getAllContent = function(params) {
+	return this.getAll(params, collectionName);
+};
+
+Content.prototype.formatContent = function(content) {
+	return this.format(content);
+};
+
+Content.prototype.format = function(content) {
+	let {name} = content;
+	delete content.name;
+	content._id = name;
+	return content;
+};
+
+Content.prototype.getContent = function(name) {
+	return this.get(name, collectionName);
+};
+
+Content.prototype.setContent = function(newContent) {
+	return this.set(newContent, collectionName);
+};
+
+Content.prototype.validate = function(content) {
+	if (content.name === undefined) {
+		throw new Error("Content must have a `name` property.");
+	} else if (typeof content.name !== "string") {
+		throw new Error("Content name must be a string.");
 	}
-}
+};
+
+function reverseFormat(content) {
+	content.name = content._id;
+	delete content._id;
+	return content;
+};
 
 module.exports = Content;
