@@ -52,6 +52,17 @@ Rule.prototype.cacheRule = function (rule) {
 	return this.cache(rule);
 };
 
+Rule.prototype.assign = function() {
+	return {
+		_id: this.ruleName,
+		isHidden: this.isHidden,
+		minGrade: this.minGrade,
+		ruleCore: this.ruleCore,
+		callback: this.callback
+	};
+
+}
+
 Rule.prototype.validate = function(rule) {
 	if (typeof rule.ruleName !== "string") {
 		throw Error("Rule name must be a string.");

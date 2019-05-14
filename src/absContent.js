@@ -36,14 +36,15 @@ AbstractContent.prototype.alter = function(name, newContent, collectionName, res
 AbstractContent.prototype.get = function(name, collectionName) {
 	return new Promise((resolve, reject) => {
 		if (name === this.name) {
-			resolve({
+			resolve(assign()
+			/*{
 				//assign values ?
 				_id: this.ruleName,
 				isHidden: this.isHidden,
 				minGrade: this.minGrade,
 				ruleCore: this.ruleCore,
 				callback: this.callback
-			});
+			}*/);
 		} else {
 			Database.db(auth.dbName).collection(collectionName).findOne({_id: name}).then((error, content) => {
 				if (error) {
