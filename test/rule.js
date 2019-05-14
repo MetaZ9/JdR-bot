@@ -1,6 +1,4 @@
 const Rule = require("./../src/rule.js");
-const {MongoClient} = require("mongodb");
-const auth = require("./../src/auth.json");
 const client = require("./../src/database.js");
 
 describe("Rule validity", () => {
@@ -62,7 +60,7 @@ describe("Rule validity", () => {
 		}).not.toThrow();
 	});
 
-	it("properly format a rule", () => {
+	it("properly formats a rule", () => {
 		let {ruleName} = compliantRule;
 		let newRules = Rule.formatRule(compliantRule);
 		expect(newRules._id).toBe(ruleName);
@@ -70,7 +68,7 @@ describe("Rule validity", () => {
 	});
 });
 
-describe("Rule gestion", () => {
+describe("Rule manager", () => {
 	let messedRule1 = {
 		ruleName: 36
 	};
@@ -116,7 +114,7 @@ describe("Rule gestion", () => {
 		callback: "bruh"
 	};
 
-	it("should reject any action if no connection", () => {
+	it("should reject any action if no connection was established", () => {
 		client.close(function(error) {
 			expectAsync(Rule.deleteRule(messedRule3.ruleName)).toBeRejected();
 			expectAsync(Rule.getRule(compliantRule.ruleName)).toBeRejected();

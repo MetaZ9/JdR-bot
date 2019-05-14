@@ -51,9 +51,9 @@ Rule.prototype.cacheRule = function(rule) {
 	return this.cache(rule);
 };
 
-Rule.prototype.assign = function() {
+Rule.prototype.fetchProperties = function() {
 	return {
-		_id: this.ruleName,
+		ruleName: this.ruleName,
 		isHidden: this.isHidden,
 		minGrade: this.minGrade,
 		ruleCore: this.ruleCore,

@@ -70,4 +70,4 @@ function reverseFormat(content) {
 	return content;
 };
 
-module.exports = Content;
+module.exports = new Content();

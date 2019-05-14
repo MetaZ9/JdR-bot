@@ -35,9 +35,10 @@ AbstractContent.prototype.alter = function(name, newContent, collectionName, res
 
 AbstractContent.prototype.get = function(contentName, collectionName) {
 	return new Promise((resolve, reject) => {
-		let {name, ruleName} = this.fetchProperties();
+		let props = this.fetchProperties();
+		let {name, ruleName} = props;
 		if ([ruleName, name].includes(contentName)) {
-			resolve(this.fetchProperties());
+			resolve(props);
 		} else {
 			Database.db(auth.dbName).collection(collectionName).findOne({_id: contentName}).then((error, content) => {
 				if (error) {
