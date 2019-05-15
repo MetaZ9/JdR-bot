@@ -1,29 +1,29 @@
 class PoolObject {
 	constructor(name, instObject, type) {
-		this.id = generateID(type, name);
+		this.id = this.generateID(type, name);
 		this.instanceName = name;
 		this.objectType = type;
 		this.instObject = instObject;
 	}
 
-	generateID = function (type, name) {
+	generateID(type, name) {
 		//generate hash
-		return (type.toString().hashCode()+name.hashCode()).hashCode();
+		return hashCode(hashCode(type).toString() + hashCode(name).toString());
 	}
 
 }
 
 class Session {
 	constructor() {
-		this.isActive = false;
+		this.active = false;
 		this.currentRPG = null;
 		this.pool = []
 	}
 
 }
 
-Session.prototype.setActive = function(state) {
-	return isActive = state ? true : false;
+Session.prototype.toggleActive = function(state) {
+	this.active = state;
 };
 
 Session.prototype.setCurrentRPG = function(rpgName) {
@@ -45,7 +45,7 @@ Session.prototype.removeObject = function(id, objectType) {
 };
 
 Session.prototype.cleanSession = function() {
-	pool.length = 0;
+	this.pool = [];
 }
 
 Session.prototype.takeObject = function(givenId, recieverId) {
@@ -65,7 +65,19 @@ Session.prototype.releaseObject = function(releaserId, objectName) {
 	// genre, quelle quantité d'un objet
 };
 
-Session.prototype.giveObject = function(releaserId, objectName, recieverId) {
-	var givenObj = releaseObject(releaserId, objectName);
-	takeObject(givenObj.id, recieverId);
+Session.prototype.giveObject = function(releaserId, objectName, receiverId) {
+	var givenObj = this.releaseObject(releaserId, objectName);
+	this.takeObject(givenObj.id, receiverId);
 };
+
+function hashCode(str) {
+	let h = 0;
+	for (let i = 0; i < str.length; i++) {
+		h= Math.imul(31, h) + str.charCodeAt(i) | 0;
+	}
+	return h;
+};
+
+// https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
+
+// on exporte ? session ? pool ? les deux ?
