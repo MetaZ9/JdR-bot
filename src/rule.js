@@ -2,6 +2,7 @@ const AbstractContent = require('./absContent.js');
 const auth = require('./auth.json');
 const Grades = require('./grades.js');
 const {isObject} = require('lodash');
+const Database = require('./database.js');
 const collectionName = auth.dbCollections.rules;
 
 class Rule extends AbstractContent {
@@ -103,5 +104,18 @@ Rule.prototype.format = function(rule) {
 Rule.prototype.formatRule = function(rule) {
 	return this.format(rule);
 };
+
+Rule.prototype.getContentType = function (contentTypeName) {
+	Database.db(auth.dbName).collection(collectionName).findOne({_id: "contentType"+contentTypeName}).then((error, content) => {
+		if (error) {
+			throw error;
+		}
+
+		resolve(content);
+	}).catch((error) => {
+		console.log(error);
+		return error;
+	});
+}
 
 module.exports = new Rule();

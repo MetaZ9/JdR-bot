@@ -1,5 +1,6 @@
 const collectionName = require('./auth.json').dbCollections.content;
 const AbstractContent = require('./absContent.js');
+const Rule = require('./rule.js');
 
 class Content extends AbstractContent {
 	constructor() {
@@ -56,7 +57,9 @@ Content.prototype.setContent = function(newContent) {
 	return this.set(newContent, collectionName);
 };
 
-Content.prototype.validate = function(content) {
+Content.prototype.validate = function(content, contentType) {
+	let contentDef = Rule.getContentType(contentType);
+
 	if (content.name === undefined) {
 		throw new Error("Content must have a `name` property.");
 	} else if (typeof content.name !== "string") {
