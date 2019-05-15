@@ -33,7 +33,7 @@ Session.prototype.setCurrentRPG = function(rpgName) {
 };
 
 Session.prototype.addObject = function(name, newObject, objectType) {
-	pool.push(new PoolObject(name, newObject, objectType));
+	this.pool.push(new PoolObject(name, newObject, objectType));
 };
 
 Session.prototype.removeObject = function(id, objectType) {
@@ -41,11 +41,11 @@ Session.prototype.removeObject = function(id, objectType) {
 		return element.objectType === objectType && element.id === id;
 	});
 
-	pool.splice(indexFound, 1);
+	this.pool.splice(indexFound, 1);
 };
 
 Session.prototype.cleanSession = function() {
-	this.pool = [];
+	this.pool.length = 0;
 }
 
 Session.prototype.takeObject = function(givenId, recieverId) {
@@ -70,14 +70,15 @@ Session.prototype.giveObject = function(releaserId, objectName, receiverId) {
 	this.takeObject(givenObj.id, receiverId);
 };
 
+// https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
 function hashCode(str) {
 	let h = 0;
+
 	for (let i = 0; i < str.length; i++) {
 		h= Math.imul(31, h) + str.charCodeAt(i) | 0;
 	}
 	return h;
 };
 
-// https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
-
 // on exporte ? session ? pool ? les deux ?
+module.exports = new Session();
