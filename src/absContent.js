@@ -1,6 +1,5 @@
 const Database = require('./database.js');
 const auth = require('./auth.json');
-const {compact, isObject} = require('lodash');
 
 class AbstractContent {
 };
