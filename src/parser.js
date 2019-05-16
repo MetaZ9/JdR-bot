@@ -14,11 +14,14 @@ function parse(message) {
 	}
 	let [command] = matchedCommand;
 	let args = realContent.replace(command, "").split(/\s+/);
-	determineCommandSource(command).then((command, isCustomCommand) => {
+	return determineCommandSource(command).then((cmd, isCustomCommand) => {
 		if (isCustomCommand) {
-			command.callback.apply(null, args);
+			applyRule(cmd, args, message).then(() => {
+				Promise.resolve();
+			});
 		} else {
-			command(message).apply(null, args);
+			cmd(message).apply(null, args);
+			Promise.resolve();
 		}
 	});
 };
@@ -31,10 +34,31 @@ function determineCommandSource(command) {
 			Rule.getRule(command).then(rule => {
 				if (rule) {
 					resolve(rule, true);
+				} else {
+					throw new Error(`${command} command is unknown.`);
 				}
 			});
 		}
 	});
+};
+
+function applyRule(rule, args, message) {
+	return new Promise((resolve, reject) => {
+		// re-curse-ive
+		Rule.getRule(rule.ruleName).then(RULE => { // j'avais besoin d'un autre nom que de rule D:
+			if (rule.callback) {
+				let fct = parseCore(rule.ruleCore);
+				fct(args, message);
+				applyRule(rule.callback, args, message);
+			}
+		});
+	});
+};
+
+function parseCore(core) {
+	return function() {
+
+	}; // TBD
 };
 
 module.exports = parse;
