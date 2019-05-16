@@ -48,12 +48,12 @@ Session.prototype.cleanSession = function() {
 	this.pool.length = 0;
 }
 
-Session.prototype.takeObject = function(givenId, recieverId) {
+Session.prototype.takeObject = function(givenId, receiverId) {
 	// check si les id existent
 
 	// check si le receveur a une place de disponible pour ce type d'objet
 
-	// add object to reciever
+	// add object to receiver
 };
 
 Session.prototype.releaseObject = function(releaserId, objectName) {
@@ -66,19 +66,17 @@ Session.prototype.releaseObject = function(releaserId, objectName) {
 };
 
 Session.prototype.giveObject = function(releaserId, objectName, receiverId) {
-	var givenObj = this.releaseObject(releaserId, objectName);
+	let givenObj = this.releaseObject(releaserId, objectName);
 	this.takeObject(givenObj.id, receiverId);
 };
 
 // https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
 function hashCode(str) {
 	let h = 0;
-
 	for (let i = 0; i < str.length; i++) {
-		h= Math.imul(31, h) + str.charCodeAt(i) | 0;
+		h = Math.imul(31, h) + str.charCodeAt(i) | 0;
 	}
 	return h;
 };
 
-// on exporte ? session ? pool ? les deux ?
 module.exports = new Session();

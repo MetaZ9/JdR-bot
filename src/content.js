@@ -43,10 +43,11 @@ Content.prototype.formatContent = function(content) {
 };
 
 Content.prototype.format = function(content) {
-	let {name} = content;
-	delete content.name;
-	content._id = name;
-	return content;
+	let copy = {...content};
+	let {name} = copy;
+	delete copy.name;
+	copy._id = name;
+	return copy;
 };
 
 Content.prototype.getContent = function(name) {
@@ -58,8 +59,9 @@ Content.prototype.setContent = function(newContent) {
 };
 
 Content.prototype.validate = function(content, contentType) {
-	let contentDef = Rule.getContentType(contentType);
-
+	// je mets la ligne en commentaire parce que j'ai pas trop compris
+	// l'utilité d'aller chercher le contentType depuis la classe Rule
+	//let contentDef = Rule.getContentType(contentType);
 	if (content.name === undefined) {
 		throw new Error("Content must have a `name` property.");
 	} else if (typeof content.name !== "string") {

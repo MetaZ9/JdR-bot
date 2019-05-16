@@ -106,15 +106,14 @@ Rule.prototype.formatRule = function(rule) {
 };
 
 Rule.prototype.getContentType = function (contentTypeName) {
-	Database.db(auth.dbName).collection(collectionName).findOne({_id: "contentType"+contentTypeName}).then((error, content) => {
-		if (error) {
-			throw error;
-		}
+	return new Promise((resolve, reject) => {
+		Database.db(auth.dbName).collection(collectionName).findOne({_id: "contentType"+contentTypeName}).then((error, content) => {
+			if (error) {
+				throw error;
+			}
 
-		resolve(content);
-	}).catch((error) => {
-		console.log(error);
-		return error;
+			resolve(content);
+		});
 	});
 }
 

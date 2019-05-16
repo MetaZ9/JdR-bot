@@ -3,10 +3,6 @@ const auth = require('./auth.json');
 const {compact, isObject} = require('lodash');
 
 class AbstractContent {
-	constuctor () {
-
-	};
-
 };
 
 AbstractContent.prototype.create = function(content, collection) {
@@ -20,8 +16,8 @@ AbstractContent.prototype.alter = function(name, newContent, collectionName, res
 		let newObject = this.format(newContent);
 		newObject._id = name;
 
-		Database.db(auth.dbName).collection(collectionName).findOneAndReplace({_id: name}, newObject, {"returnNewDocument" : resolveNewContent}
-		).then((error, content) => {
+		Database.db(auth.dbName).collection(collectionName).findOneAndReplace({_id: name}, newObject, {returnNewDocument: resolveNewContent})
+		.then((error, content) => {
 			if (error) {
 				throw error;
 			}
