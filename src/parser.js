@@ -49,7 +49,7 @@ function applyRule(rule, args, message) {
 			if (rule.callback) {
 				let fct = parseCore(rule.ruleCore);
 				fct(args, message);
-				applyRule(rule.callback, args, message);
+				applyRule(RULE.callback, args, message);
 			}
 		});
 	});
