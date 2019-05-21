@@ -17,13 +17,13 @@ class Session {
 	constructor() {
 		this.active = false;
 		this.currentRPG = null;
-		this.pool = []
+		this.pool = [];
 	}
 
 }
 
-Session.prototype.toggleActive = function(state) {
-	this.active = state;
+Session.prototype.toggleActive = function() {
+	this.active = !this.active;
 };
 
 Session.prototype.setCurrentRPG = function(rpgName) {

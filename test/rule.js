@@ -3,25 +3,25 @@ const client = require("./../src/database.js");
 
 describe("Rule validity", () => {
 	let messedRule1 = {
-		ruleName: 36
+		name: 36
 	};
 	let messedRule2 = {
-		ruleName: "a valid name",
+		name: "a valid name",
 		isHidden: "no"
 	};
 	let messedRule3 = {
-		ruleName: "valid",
+		name: "valid",
 		isHidden: false,
 		minGrade: "ur mom"
 	};
 	let messedRule4 = {
-		ruleName: "valid",
+		name: "valid",
 		isHidden: true,
 		minGrade: 4,
 		ruleCore: "bruh"
 	};
 	let messedRule5 = {
-		ruleName: "no",
+		name: "no",
 		isHidden: false,
 		minGrade: 36,
 		ruleCore: {
@@ -30,7 +30,7 @@ describe("Rule validity", () => {
 		callback: "no"
 	};
 	let compliantRule = {
-		ruleName: "bruh",
+		name: "bruh",
 		minGrade: 5,
 		isHidden: true,
 		ruleCore: {
@@ -61,34 +61,34 @@ describe("Rule validity", () => {
 	});
 
 	it("properly formats a rule", () => {
-		let {ruleName} = compliantRule;
+		let {name} = compliantRule;
 		let newRules = Rule.formatRule(compliantRule);
-		expect(newRules._id).toBe(ruleName);
-		expect(newRules.ruleName).toBeFalsy();
+		expect(newRules._id).toBe(name);
+		expect(newRules.name).toBeFalsy();
 	});
 });
 
 describe("Rule manager", () => {
 	let messedRule1 = {
-		ruleName: 36
+		name: 36
 	};
 	let messedRule2 = {
-		ruleName: "a valid name",
+		name: "a valid name",
 		isHidden: "no"
 	};
 	let messedRule3 = {
-		ruleName: "valid",
+		name: "valid",
 		isHidden: false,
 		minGrade: "ur mom"
 	};
 	let messedRule4 = {
-		ruleName: "valid",
+		name: "valid",
 		isHidden: true,
 		minGrade: 4,
 		ruleCore: "bruh"
 	};
 	let messedRule5 = {
-		ruleName: "no",
+		name: "no",
 		isHidden: false,
 		minGrade: 36,
 		ruleCore: {
@@ -97,7 +97,7 @@ describe("Rule manager", () => {
 		callback: "no"
 	};
 	let compliantRule = {
-		ruleName: "bruh",
+		name: "bruh",
 		minGrade: 5,
 		isHidden: true,
 		ruleCore: {
@@ -105,7 +105,7 @@ describe("Rule manager", () => {
 		}
 	};
 	let compliantRule1 = {
-		ruleName: "brah",
+		name: "brah",
 		minGrade: 2,
 		isHidden: false,
 		ruleCore: {
@@ -116,8 +116,8 @@ describe("Rule manager", () => {
 
 	it("should reject any action if no connection was established", () => {
 		client.close(function(error) {
-			expectAsync(Rule.deleteRule(messedRule3.ruleName)).toBeRejected();
-			expectAsync(Rule.getRule(compliantRule.ruleName)).toBeRejected();
+			expectAsync(Rule.deleteRule(messedRule3.name)).toBeRejected();
+			expectAsync(Rule.getRule(compliantRule.name)).toBeRejected();
 			expectAsync(Rule.createRule(compliantRule)).toBeRejected();
 		});
 	});
@@ -153,19 +153,19 @@ describe("Rule manager", () => {
 			expectAsync(Rule.setRule(messedRule5)).toBeRejected();
 
 			expect(function() {
-				Rule.alterRule(messedRule1.ruleName, messedRule1);
+				Rule.alterRule(messedRule1.name, messedRule1);
 			}).toThrow();
 			expect(function() {
-				Rule.alterRule(messedRule1.ruleName, messedRule2);
+				Rule.alterRule(messedRule1.name, messedRule2);
 			}).toThrow();
 			expect(function() {
-				Rule.alterRule(messedRule1.ruleName, messedRule3);
+				Rule.alterRule(messedRule1.name, messedRule3);
 			}).toThrow();
 			expect(function() {
-				Rule.alterRule(messedRule1.ruleName, messedRule4);
+				Rule.alterRule(messedRule1.name, messedRule4);
 			}).toThrow();
 			expect(function() {
-				Rule.alterRule(messedRule1.ruleName, messedRule5);
+				Rule.alterRule(messedRule1.name, messedRule5);
 			}).toThrow();
 
 		});
@@ -177,7 +177,7 @@ describe("Rule manager", () => {
 			expectAsync(Rule.deleteRule(compliantRule)).toBeRejected();
 			expectAsync(Rule.deleteRule(compliantRule1)).toBeRejected();
 
-			expectAsync(Rule.alterRule(compliantRule.ruleName, compliantRule1)).toBeRejected();
+			expectAsync(Rule.alterRule(compliantRule.name, compliantRule1)).toBeRejected();
 
 		});
 
@@ -193,7 +193,7 @@ describe("Rule manager", () => {
 			expectAsync(Rule.getRule(compliantRule)).toBeResolved();
 			expectAsync(Rule.getRule(compliantRule1)).toBeResolved();
 
-			expectAsync(Rule.alterRule(compliantRule.ruleName, compliantRule1)).toBeResolved();
+			expectAsync(Rule.alterRule(compliantRule.name, compliantRule1)).toBeResolved();
 
 			expectAsync(Rule.deleteRule(compliantRule)).toBeResolved();
 			expectAsync(Rule.deleteRule(compliantRule1)).toBeResolved();

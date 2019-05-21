@@ -8,7 +8,7 @@ const collectionName = auth.dbCollections.rules;
 class Rule extends AbstractContent {
 	constructor() {
 		super();
-		this.ruleName = '';
+		this.name = '';
 		this.isHidden = true;
 		this.minGrade = Grades.ADMIN;
 		this.ruleCore = {};
@@ -33,7 +33,7 @@ Rule.prototype.getAllRules = function(params) {
 };
 
 Rule.prototype.setRule = function(newRule) {
-	return this.setRule(newRule, collectionName);
+	return this.create(newRule, collectionName);
 };
 
 Rule.prototype.deleteRule = function(name) {
@@ -41,7 +41,7 @@ Rule.prototype.deleteRule = function(name) {
 };
 
 Rule.prototype.cache = function(rule) {
-	this.ruleName = rule._id;
+	this.name = rule._id;
 	this.isHidden = rule.isHidden;
 	this.minGrade = rule.minGrade;
 	this.ruleCore = rule.ruleCore;
@@ -54,17 +54,16 @@ Rule.prototype.cacheRule = function(rule) {
 
 Rule.prototype.fetchProperties = function() {
 	return {
-		ruleName: this.ruleName,
+		name: this.name,
 		isHidden: this.isHidden,
 		minGrade: this.minGrade,
 		ruleCore: this.ruleCore,
 		callback: this.callback
 	};
-
-}
+};
 
 Rule.prototype.validate = function(rule) {
-	if (typeof rule.ruleName !== "string") {
+	if (typeof rule.name !== "string") {
 		throw Error("Rule name must be a string.");
 	}
 
@@ -84,7 +83,7 @@ Rule.prototype.validate = function(rule) {
 		if (typeof rule.callback !== "string") {
 			throw Error("Callback must be a string.");
 		}
-		else if (rule.callback === rule.ruleName) {
+		else if (rule.callback === rule.name) {
 			throw Error("Callback references itself");
 		}
 	}
@@ -94,18 +93,11 @@ Rule.prototype.validateRule = function(rule) {
 	return this.validate(rule);
 };
 
-Rule.prototype.format = function(rule) {
-	let copy = Object.assign({}, rule);
-	copy._id = copy.ruleName;
-	delete copy.ruleName;
-	return copy;
-};
-
 Rule.prototype.formatRule = function(rule) {
 	return this.format(rule);
 };
 
-Rule.prototype.getContentType = function (contentTypeName) {
+Rule.prototype.getContentType = function(contentTypeName) {
 	return new Promise((resolve, reject) => {
 		Database.db(auth.dbName).collection(collectionName).findOne({_id: "contentType"+contentTypeName}).then((error, content) => {
 			if (error) {
@@ -115,6 +107,6 @@ Rule.prototype.getContentType = function (contentTypeName) {
 			resolve(content);
 		});
 	});
-}
+};
 
 module.exports = new Rule();

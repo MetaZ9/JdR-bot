@@ -45,7 +45,7 @@ function determineCommandSource(command) {
 function applyRule(rule, args, message) {
 	return new Promise((resolve, reject) => {
 		// re-curse-ive
-		Rule.getRule(rule.ruleName).then(RULE => { // j'avais besoin d'un autre nom que de rule D:
+		Rule.getRule(rule.name).then(RULE => { // j'avais besoin d'un autre nom que de rule D:
 			if (rule.callback) {
 				let fct = parseCore(rule.ruleCore);
 				fct(args, message);

@@ -28,18 +28,25 @@ AbstractContent.prototype.alter = function(name, newContent, collectionName, res
 	});
 };
 
+AbstractContent.prototype.format = function(content) {
+	let copy = {...content};
+	let {name} = copy;
+	delete copy.name;
+	copy._id = name;
+	return copy;
+};
+
 AbstractContent.prototype.get = function(contentName, collectionName) {
 	return new Promise((resolve, reject) => {
 		let props = this.fetchProperties();
-		let {name, ruleName} = props;
-		if ([ruleName, name].includes(contentName)) {
+		let {name} = props;
+		if (contentName === name) {
 			resolve(props);
 		} else {
 			Database.db(auth.dbName).collection(collectionName).findOne({_id: contentName}).then((error, content) => {
 				if (error) {
 					throw error;
 				}
-
 				this.cache(content);
 				resolve(content);
 			});
@@ -55,13 +62,9 @@ AbstractContent.prototype.getAll = function(params, collectionName) {
 			if (error) {
 				throw error;
 			}
-
-			//this.cacheRule(rule);
 			resolve(contents);
 		});
-
 	});
-
 };
 
 AbstractContent.prototype.set = function(content, collectionName) {
