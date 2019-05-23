@@ -8,7 +8,11 @@ const {DMChannel} = require("discord.js");
 //2 : content name
 //3 : object name in pool
 function addPoolObject(contentType, contentName, poolName) {
-	// body...
+	// fetch content type from database
+	// if needed, ask for characteristics (couple de param-values) -> truc comme le search de rythm, je sais pas du tout comment faire ça x')
+	// add final object to session pool
+
+	// send message with name & poolID
 }
 
 module.exports = addPoolObject;
