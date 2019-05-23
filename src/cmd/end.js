@@ -1,3 +1,11 @@
 const client = require("./client.js");
 
-module.exports = client.close;
+function endSession(save) {
+	if (save) {
+		saveSessionPool();
+	}
+
+	client.close();
+}
+
+module.exports = endSession;
