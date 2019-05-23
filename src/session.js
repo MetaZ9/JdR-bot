@@ -17,6 +17,7 @@ class Session {
 	constructor() {
 		this.active = false;
 		this.currentRPG = null;
+/******************************** TODO => utiliser une map plutôt, pour avoir pool[id] = obj. Du coup faut revoir le constructeur de PoolObject */
 		this.pool = [];
 	}
 
@@ -38,7 +39,7 @@ Session.prototype.addObject = function(name, newObject, objectType) {
 
 Session.prototype.removeObject = function(id, objectType) {
 	var indexFound = pool.findIndex(function (element) {
-		return element.objectType === objectType && element.id === id;
+		return /*element.objectType === objectType &&*/ element.id === id;
 	});
 
 	this.pool.splice(indexFound, 1);
@@ -69,6 +70,18 @@ Session.prototype.giveObject = function(releaserId, objectName, receiverId) {
 	let givenObj = this.releaseObject(releaserId, objectName);
 	this.takeObject(givenObj.id, receiverId);
 };
+
+Session.prototype.get = function (objectID) {
+	return pool[objectID].instObject;
+}
+
+Session.prototype.setProp = function (objectID, prop, value) {
+	pool[objectID].instObject[prop] = value;
+}
+
+Session.prototype.setObj = function (objectID, newObj) {
+	pool[objectID].instObject = newObj;
+}
 
 // https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
 function hashCode(str) {
