@@ -8,7 +8,7 @@ AbstractContent.prototype.createBase = function(content, collection) {
 	this.validate(content);
 	return this.set(content, collection);
 };
-AbstractContent.prototype.create = createBase;
+AbstractContent.prototype.create = AbstractContent.prototype.createBase;
 
 AbstractContent.prototype.alterBase = function(name, newContent, collectionName, resolveNewContent = true) {
 	this.validate(newContent);
@@ -28,7 +28,7 @@ AbstractContent.prototype.alterBase = function(name, newContent, collectionName,
 		});
 	});
 };
-AbstractContent.prototype.alter = alterBase;
+AbstractContent.prototype.alter = AbstractContent.prototype.alterBase;
 
 //********************************** Presque sûr que ça ne devrait pas exister ici (ou en tous cas pas dans cette version)
 AbstractContent.prototype.formatBase = function(content) {
@@ -38,7 +38,7 @@ AbstractContent.prototype.formatBase = function(content) {
 	copy._id = name;
 	return copy;
 };
-AbstractContent.prototype.format = formatBase;
+AbstractContent.prototype.format = AbstractContent.prototype.formatBase;
 
 AbstractContent.prototype.getBase = function(contentName, collectionName) {
 	return new Promise((resolve, reject) => {
@@ -57,7 +57,7 @@ AbstractContent.prototype.getBase = function(contentName, collectionName) {
 		}
 	});
 };
-AbstractContent.prototype.get = getBase;
+AbstractContent.prototype.get = AbstractContent.prototype.getBase;
 
 //J'ai juste fait ça pour que ça marche, faudra complètement la repenser x)
 //Est-ce qu'on ferait pas un query manager ? Je pense que ça sera le mieux
@@ -71,7 +71,7 @@ AbstractContent.prototype.getAllBase = function(params, collectionName) {
 		});
 	});
 };
-AbstractContent.prototype.getAll = getAllBase;
+AbstractContent.prototype.getAll = AbstractContent.prototype.getAllBase;
 
 AbstractContent.prototype.setBase = function(content, collectionName) {
 	const toInsert = this.format(content);
@@ -81,7 +81,7 @@ AbstractContent.prototype.setBase = function(content, collectionName) {
 		});
 	});
 };
-AbstractContent.prototype.set = setBase;
+AbstractContent.prototype.set = AbstractContent.prototype.setBase;
 
 AbstractContent.prototype.deleteBase = function(name, collectionName) {
 	return new Promise((resolve, reject) => {
@@ -96,6 +96,6 @@ AbstractContent.prototype.deleteBase = function(name, collectionName) {
 		});
 	});
 };
-AbstractContent.prototype.delete = deleteBase;
+AbstractContent.prototype.delete = AbstractContent.prototype.deleteBase;
 
 module.exports = AbstractContent;

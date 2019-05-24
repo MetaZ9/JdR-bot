@@ -37,7 +37,7 @@ Rule.prototype.getAll = function(params) {
 };
 
 Rule.prototype.set = function(newRule) {
-	return this.createBase(newRule, collectionName);
+	return this.setBase(newRule, collectionName);
 };
 
 Rule.prototype.delete = function(name) {
