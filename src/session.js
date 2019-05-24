@@ -1,9 +1,9 @@
-class PoolObject {
-	constructor(name, instObject, type) {
+class PoolItem {
+	constructor(name, instItem, type) {
 		this.id = this.generateID(type, name);
 		this.instanceName = name;
-		this.objectType = type;
-		this.instObject = instObject;
+		this.ItemType = type;
+		this.instItem = instItem;
 	}
 
 	generateID(type, name) {
@@ -17,8 +17,9 @@ class Session {
 	constructor() {
 		this.active = false;
 		this.currentRPG = null;
-/******************************** TODO => utiliser une map plutôt, pour avoir pool[id] = obj. Du coup faut revoir le constructeur de PoolObject */
-		this.pool = [];
+/******************************** TODO => utiliser une map plutôt, pour avoir pool[id] = obj. Du coup faut revoir le constructeur de PoolItem */
+/******************************** ou pas :grin: */
+		this.pool = {};
 	}
 
 }
@@ -33,31 +34,31 @@ Session.prototype.setCurrentRPG = function(rpgName) {
 	// set auth.db values ? ou un truc du genre
 };
 
-Session.prototype.addObject = function(name, newObject, objectType) {
-	this.pool.push(new PoolObject(name, newObject, objectType));
+Session.prototype.addItem = function(id, newItem, ItemType) {
+	this.pool[id] = new PoolItem(id, newItem, ItemType);
 };
 
-Session.prototype.removeObject = function(id, objectType) {
-	var indexFound = pool.findIndex(function (element) {
-		return /*element.objectType === objectType &&*/ element.id === id;
-	});
-
-	this.pool.splice(indexFound, 1);
+Session.prototype.removeItem = function(id, ItemType) {
+	if (id in this.pool) {
+		delete this.pool[id];
+	} else {
+		// erreur : contenu non présent
+	}
 };
 
 Session.prototype.cleanSession = function() {
 	this.pool.length = 0;
 }
 
-Session.prototype.takeObject = function(givenId, receiverId) {
+Session.prototype.takeItem = function(givenId, receiverId) {
 	// check si les id existent
 
 	// check si le receveur a une place de disponible pour ce type d'objet
 
-	// add object to receiver
+	// add Item to receiver
 };
 
-Session.prototype.releaseObject = function(releaserId, objectName) {
+Session.prototype.releaseItem = function(id, ItemName, quantity = 1) {
 	// check si l'id existe
 
 	// check si l'objet existe dans la définition de contenu du type
@@ -66,21 +67,25 @@ Session.prototype.releaseObject = function(releaserId, objectName) {
 	// genre, quelle quantité d'un objet
 };
 
-Session.prototype.giveObject = function(releaserId, objectName, receiverId) {
-	let givenObj = this.releaseObject(releaserId, objectName);
-	this.takeObject(givenObj.id, receiverId);
+Session.prototype.giveItem = function(releaserId, ItemName, receiverId) {
+	let givenObj = this.releaseItem(releaserId, ItemName);
+	this.takeItem(givenObj.id, receiverId);
 };
 
-Session.prototype.get = function (objectID) {
-	return pool[objectID].instObject;
+Session.prototype.get = function(id) {
+	if (id in this.pool) {
+		return this.pool[id].instItem;
+	} else {
+		// erreur : contenu introuvable
+	}
 }
 
-Session.prototype.setProp = function (objectID, prop, value) {
-	pool[objectID].instObject[prop] = value;
+Session.prototype.setProp = function(id, prop, value) {
+	this.pool[id].instItem[prop] = value;
 }
 
-Session.prototype.setObj = function (objectID, newObj) {
-	pool[objectID].instObject = newObj;
+Session.prototype.setObj = function (ItemID, newObj) {
+	this.pool[id].instItem = newObj;
 }
 
 // https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0

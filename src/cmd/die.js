@@ -7,10 +7,8 @@ function calculateDice(throwSettings, comparedStat) {
 	let numbers = Array.from({length: throwSettings.rollTimes});
 	let sum = numbers.map((bruh, i) => {
 		let drawnNumber = generateNumber(throwSettings.maxFaces, minValue, throwSettings.mod, comparedStat);
-		average += (drawnNumber - average)/(i+1);
 		return drawnNumber;
 	});
-	// reste à savoir comment se servir d'average, non ? Ça fait de la mémoire occupée en plus :}
 
 	return sum.reduce((cumulated, generatedNumber) => {
 		return cumulated + generatedNumber;
@@ -39,8 +37,7 @@ function generateDice() {
 	}
 
 	if (!rollTimes || !maxFaces) { 
-		// gérer une erreur
-		// parce que bon, 0d5 à quoi ça sert franchement
+		return 0;
 	}
 
 	if (args.length > 1) {

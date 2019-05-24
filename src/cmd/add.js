@@ -2,16 +2,17 @@ const Rule = require('./rule.js');
 const Content = require('./content.js');
 
 function addNewContent(contentType, ...paramValues) {
-	let target = {};
+	let target = {
+		[contentType === "rule"]: new Rule(),
+		[contentTypeExists(contentType)]: new Content()
+	}["true"] || undefined;
 
-	if (contentType === "rule") {
-		target = new Rule();
-	} else if (contentTypeExists(contentType)) {
-		target = new Content();
+	if (target) {
+		let newContent = listArrayToMap(paramValues);
+		return target.create(newContent);
+	} else {
+		// erreur: contenu existant
 	}
-
-	let newContent = listArrayToMap(paramValues);
-	target.create(newContent);
 }
 
 function contentTypeExists(contentType) {
@@ -21,13 +22,13 @@ function contentTypeExists(contentType) {
 
 //***************************************** TMP - Mettre dans un script utils.js
 function listArrayToMap(...paramValues) {
-	let object = {};
+	let Item = {};
 
 	for (var i = 0; i < paramValues.length - 1; i + 2) {
-		object[paramValues[i]] = paramValues[i+1];
+		Item[paramValues[i]] = paramValues[i+1];
 	}
 
-	return object;
+	return Item;
 }
 
 module.exports = addNewContent;

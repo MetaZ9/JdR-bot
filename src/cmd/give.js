@@ -4,7 +4,7 @@ const {flatten} = require("lodash");
 
 //giver = membre utilisant la commande
 //target = nom du membre-cible ou de son personnage ?
-function giveObject() {
+function giveItem() {
 // récupérer le personnage du giver
 // récupérer l'objet (par le nom ?)
 // le détacher du giver
@@ -13,7 +13,7 @@ function giveObject() {
 
 }
 
-module.exports = giveObject;
+module.exports = giveItem;
 /*
 module.exports = function(message) {
 	return function(...args) {
