@@ -4,12 +4,13 @@ const auth = require('./auth.json');
 class AbstractContent {
 };
 
-AbstractContent.prototype.create = function(content, collection) {
+AbstractContent.prototype.createBase = function(content, collection) {
 	this.validate(content);
 	return this.set(content, collection);
 };
+AbstractContent.prototype.create = createBase;
 
-AbstractContent.prototype.alter = function(name, newContent, collectionName, resolveNewContent = true) {
+AbstractContent.prototype.alterBase = function(name, newContent, collectionName, resolveNewContent = true) {
 	this.validate(newContent);
 	return new Promise((resolve, reject) => {
 		let newObject = this.format(newContent);
@@ -27,16 +28,19 @@ AbstractContent.prototype.alter = function(name, newContent, collectionName, res
 		});
 	});
 };
+AbstractContent.prototype.alter = alterBase;
 
-AbstractContent.prototype.format = function(content) {
+//********************************** Presque sûr que ça ne devrait pas exister ici (ou en tous cas pas dans cette version)
+AbstractContent.prototype.formatBase = function(content) {
 	let copy = {...content};
 	let {name} = copy;
 	delete copy.name;
 	copy._id = name;
 	return copy;
 };
+AbstractContent.prototype.format = formatBase;
 
-AbstractContent.prototype.get = function(contentName, collectionName) {
+AbstractContent.prototype.getBase = function(contentName, collectionName) {
 	return new Promise((resolve, reject) => {
 		let props = this.fetchProperties();
 		let {name} = props;
@@ -53,10 +57,11 @@ AbstractContent.prototype.get = function(contentName, collectionName) {
 		}
 	});
 };
+AbstractContent.prototype.get = getBase;
 
 //J'ai juste fait ça pour que ça marche, faudra complètement la repenser x)
 //Est-ce qu'on ferait pas un query manager ? Je pense que ça sera le mieux
-AbstractContent.prototype.getAll = function(params, collectionName) {
+AbstractContent.prototype.getAllBase = function(params, collectionName) {
 	return new Promise((resolve, reject) => {
 		Database.db(auth.dbName).collection(collectionName).find(params).then((error, contents) => {
 			if (error) {
@@ -66,8 +71,9 @@ AbstractContent.prototype.getAll = function(params, collectionName) {
 		});
 	});
 };
+AbstractContent.prototype.getAll = getAllBase;
 
-AbstractContent.prototype.set = function(content, collectionName) {
+AbstractContent.prototype.setBase = function(content, collectionName) {
 	const toInsert = this.format(content);
 	return new Promise((resolve, reject) => {
 		Database.db(auth.dbName).collection(collectionName).insertOne(toInsert).then((error, inserted) => {
@@ -75,8 +81,9 @@ AbstractContent.prototype.set = function(content, collectionName) {
 		});
 	});
 };
+AbstractContent.prototype.set = setBase;
 
-AbstractContent.prototype.delete = function(name, collectionName) {
+AbstractContent.prototype.deleteBase = function(name, collectionName) {
 	return new Promise((resolve, reject) => {
 		Database.db(auth.dbName).collection(collectionName).deleteOne({_id: name}).then(deleted => {
 			if (error) {
@@ -89,5 +96,6 @@ AbstractContent.prototype.delete = function(name, collectionName) {
 		});
 	});
 };
+AbstractContent.prototype.delete = deleteBase;
 
 module.exports = AbstractContent;

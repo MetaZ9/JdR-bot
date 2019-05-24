@@ -16,29 +16,37 @@ class Rule extends AbstractContent {
 	};
 };
 
-Rule.prototype.createRule = function(rule) {
-	return this.create(rule, collectionName);
+//*************************************
+//			INHERITED FUNCTIONS
+//*************************************
+
+Rule.prototype.create = function(rule) {
+	return this.createBase(rule, collectionName);
 };
 
-Rule.prototype.alterRule = function(name, newRule, resolveNewRule = true) {
-	return this.alter(name, newRule, collectionName, resolveNewRule);
+Rule.prototype.alter = function(name, newRule, resolveNewRule = true) {
+	return this.alterBase(name, newRule, collectionName, resolveNewRule);
 };
 
-Rule.prototype.getRule = function(name) {
-	return this.get(name, collectionName);
+Rule.prototype.get = function(name) {
+	return this.getBase(name, collectionName);
 };
 
-Rule.prototype.getAllRules = function(params) {
-	return this.getAll(params, collectionName);
+Rule.prototype.getAll = function(params) {
+	return this.getAllBase(params, collectionName);
 };
 
-Rule.prototype.setRule = function(newRule) {
-	return this.create(newRule, collectionName);
+Rule.prototype.set = function(newRule) {
+	return this.createBase(newRule, collectionName);
 };
 
-Rule.prototype.deleteRule = function(name) {
-	return this.delete(name, collectionName)
+Rule.prototype.delete = function(name) {
+	return this.deleteBase(name, collectionName)
 };
+
+//*************************************
+//			SPECIALIZED FUNCTIONS
+//*************************************
 
 Rule.prototype.cache = function(rule) {
 	this.name = rule._id;
@@ -48,6 +56,7 @@ Rule.prototype.cache = function(rule) {
 	this.callback = rule.callback;
 };
 
+//********************* Should delete this
 Rule.prototype.cacheRule = function(rule) {
 	return this.cache(rule);
 };
@@ -89,13 +98,19 @@ Rule.prototype.validate = function(rule) {
 	}
 };
 
+//******************* Should delete this
 Rule.prototype.validateRule = function(rule) {
 	return this.validate(rule);
 };
 
+//******************* Il manque le format de base
 Rule.prototype.formatRule = function(rule) {
 	return this.format(rule);
 };
+
+//*************************************
+//			SPECIFIC FUNCTIONS
+//*************************************
 
 Rule.prototype.getContentType = function(contentTypeName) {
 	return new Promise((resolve, reject) => {

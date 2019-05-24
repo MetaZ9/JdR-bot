@@ -8,28 +8,36 @@ class RPGHandler extends AbstractContent {
 	};
 };
 
-RPGHandler.prototype.createRPG = function(params) {
-	return this.create(params, rpgsCollection);
+//*************************************
+//			INHERITED FUNCTIONS
+//*************************************
+
+RPGHandler.prototype.create = function(params) {
+	return this.createBase(params, rpgsCollection);
 };
 
-RPGHandler.prototype.alterRPG = function(name, newRPG, resolveNewContent) {
-	return this.alter(name, newRPG, rpgsCollection, resolveNewContent);
+RPGHandler.prototype.alter = function(name, newRPG, resolveNewContent) {
+	return this.alterBase(name, newRPG, rpgsCollection, resolveNewContent);
 };
 
-RPGHandler.prototype.getRPG = function(name) {
-	return this.get(name, rpgsCollection);
+RPGHandler.prototype.get = function(name) {
+	return this.getBase(name, rpgsCollection);
 };
 
-RPGHandler.prototype.deleteRPG = function(name) {
-	return this.delete(name, rpgsCollection);
+RPGHandler.prototype.delete = function(name) {
+	return this.deleteBase(name, rpgsCollection);
 };
+
+RPGHandler.prototype.set = function(name) {
+	return this.setBase(name, rpgsCollection);
+};
+
+//*************************************
+//			SPECIALIZED FUNCTIONS
+//*************************************
 
 RPGHandler.prototype.fetchProperties = function() {
 	return this.rpgInfo;
-};
-
-RPGHandler.prototype.setRPG = function(name) {
-	return this.set(name, rpgsCollection);
 };
 
 RPGHandler.prototype.validate = function(rpgData) {

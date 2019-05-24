@@ -9,35 +9,39 @@ class Content extends AbstractContent {
 	};
 };
 
-Content.prototype.fetchProperties = function() {
-	return this.ruleDefinedVars;
+//*************************************
+//			INHERITED FUNCTIONS
+//*************************************
+
+Content.prototype.alter = function(name, newContent, resolveNewContent = true) {
+	return this.alterBase(name, newContent, collectionName, resolveNewContent);
 };
 
-Content.prototype.alterContent = function(name, newContent, resolveNewContent = true) {
-	return this.alter(name, newContent, collectionName, resolveNewContent);
+Content.prototype.create = function(content) {
+	return this.createBase(content, collectionName);
 };
 
-Content.prototype.cache = function(content) {
-	let decodedContent = reverseFormat(content);
-	this.ruleDefinedVars = decodedContent;
+Content.prototype.delete = function(name) {
+	return this.deleteBase(name, collectionName);
 };
 
-Content.prototype.createContent = function(content) {
-	return this.create(content, collectionName);
+Content.prototype.get = function(name) {
+	return this.getBase(name, collectionName);
 };
 
-Content.prototype.deleteContent = function(name) {
-	return this.delete(name, collectionName);
+Content.prototype.getAll = function(params) {
+	return this.getAllBase(params, collectionName);
 };
 
-Content.prototype.getContent = function(name) {
-	return this.get(name, collectionName);
+Content.prototype.set = function(newContent) {
+	return this.setBase(newContent, collectionName);
 };
 
-Content.prototype.getAllContent = function(params) {
-	return this.getAll(params, collectionName);
-};
+//*************************************
+//			SPECIALIZED FUNCTIONS
+//*************************************
 
+//********************* Nani ?
 Content.prototype.formatContent = function(content) {
 	return this.format(content);
 };
@@ -49,13 +53,15 @@ Content.prototype.format = function(content) {
 	copy._id = name;
 	return copy;
 };
+//********************* Fin Nani ?
 
-Content.prototype.getContent = function(name) {
-	return this.get(name, collectionName);
+Content.prototype.fetchProperties = function() {
+	return this.ruleDefinedVars;
 };
 
-Content.prototype.setContent = function(newContent) {
-	return this.set(newContent, collectionName);
+Content.prototype.cache = function(content) {
+	let decodedContent = reverseFormat(content);
+	this.ruleDefinedVars = decodedContent;
 };
 
 Content.prototype.validate = function(content, contentType) {
@@ -68,6 +74,10 @@ Content.prototype.validate = function(content, contentType) {
 		throw new Error("Content name must be a string.");
 	}
 };
+
+//*************************************
+//			SPECIFIC FUNCTIONS
+//*************************************
 
 function reverseFormat(content) {
 	content.name = content._id;
