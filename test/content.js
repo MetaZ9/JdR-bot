@@ -23,7 +23,7 @@ describe("Content validator", () => {
 
 	it("should properly format content", () => {
 		let {name} = goodContent;
-		let newContent = Content.formatContent(goodContent);
+		let newContent = Content.format(goodContent);
 		expect(newContent.name).toBe(undefined);
 		expect(newContent._id).toBe(name);
 	});
@@ -48,21 +48,21 @@ describe("Content validator", () => {
 
 	it("should resolve all promises when connected to DB", () => {
 		Client.connect(() => {
-			expectAsync(Content.setContent(goodContent)).toResolve();
-			expectAsync(Content.getContent(goodContent)).toResolve();
-			expectAsync(Content.alterContent(goodContent.name, altContent)).toResolve();
-			expectAsync(Content.deleteContent(altContent)).toBe(true); // content found and deleted
-			expectAsync(Content.deleteContent(altContent)).toBe(false); // deleted once, doesn't exist anymore
+			expectAsync(Content.set(goodContent)).toResolve();
+			expectAsync(Content.get(goodContent)).toResolve();
+			expectAsync(Content.alter(goodContent.name, altContent)).toResolve();
+			expectAsync(Content.delete(altContent)).toBe(true); // content found and deleted
+			expectAsync(Content.delete(altContent)).toBe(false); // deleted once, doesn't exist anymore
 			Client.close();
 		});
 	});
 
 	it("should reject all promises when not connected to DB", () => {
-		expectAsync(Content.setContent(goodContent)).toBeRejected();
-		expectAsync(Content.setContent(goodContent)).toBeRejected();
-		expectAsync(Content.getContent(goodContent)).toBeRejected();
-		expectAsync(Content.alterContent(goodContent.name, altContent)).toBeRejected();
-		expectAsync(Content.deleteContent(goodContent)).toBeRejected();
+		expectAsync(Content.set(goodContent)).toBeRejected();
+		expectAsync(Content.set(goodContent)).toBeRejected();
+		expectAsync(Content.get(goodContent)).toBeRejected();
+		expectAsync(Content.alter(goodContent.name, altContent)).toBeRejected();
+		expectAsync(Content.delete(goodContent)).toBeRejected();
 	});
 
 	it("should cache content properly", () => {

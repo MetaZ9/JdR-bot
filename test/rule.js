@@ -41,28 +41,28 @@ describe("Rule validity", () => {
 
 	it("should invalidate invalid rule objects", () => {
 		expect(function() {
-			Rule.validateRule(messedRule1);
+			Rule.validate(messedRule1);
 		}).toThrow();
 		expect(function() {
-			Rule.validateRule(messedRule2);
+			Rule.validate(messedRule2);
 		}).toThrow();
 		expect(function() {
-			Rule.validateRule(messedRule3);
+			Rule.validate(messedRule3);
 		}).toThrow();
 		expect(function() {
-			Rule.validateRule(messedRule4);
+			Rule.validate(messedRule4);
 		}).toThrow();
 		expect(function() {
-			Rule.validateRule(messedRule5);
+			Rule.validate(messedRule5);
 		}).toThrow();
 		expect(function() {
-			Rule.validateRule(compliantRule);
+			Rule.validate(compliantRule);
 		}).not.toThrow();
 	});
 
 	it("properly formats a rule", () => {
 		let {name} = compliantRule;
-		let newRules = Rule.formatRule(compliantRule);
+		let newRules = Rule.format(compliantRule);
 		expect(newRules._id).toBe(name);
 		expect(newRules.name).toBeFalsy();
 	});
@@ -116,9 +116,9 @@ describe("Rule manager", () => {
 
 	it("should reject any action if no connection was established", () => {
 		client.close(function(error) {
-			expectAsync(Rule.deleteRule(messedRule3.name)).toBeRejected();
-			expectAsync(Rule.getRule(compliantRule.name)).toBeRejected();
-			expectAsync(Rule.createRule(compliantRule)).toBeRejected();
+			expectAsync(Rule.delete(messedRule3.name)).toBeRejected();
+			expectAsync(Rule.get(compliantRule.name)).toBeRejected();
+			expectAsync(Rule.create(compliantRule)).toBeRejected();
 		});
 	});
 
@@ -130,73 +130,73 @@ describe("Rule manager", () => {
 
 		it("should not create, set or alter if rule is invalid", () => {
 			expect(function() {
-				Rule.createRule(messedRule1);
+				Rule.create(messedRule1);
 			}).toThrow();
 			expect(function() {
-				Rule.createRule(messedRule2);
+				Rule.create(messedRule2);
 			}).toThrow();
 			expect(function() {
-				Rule.createRule(messedRule3);
+				Rule.create(messedRule3);
 			}).toThrow();
 			expect(function() {
-				Rule.createRule(messedRule4);
+				Rule.create(messedRule4);
 			}).toThrow();
 			expect(function() {
-				Rule.createRule(messedRule5);
+				Rule.create(messedRule5);
 			}).toThrow();
 
 
-			expectAsync(Rule.setRule(messedRule1)).toBeRejected();
-			expectAsync(Rule.setRule(messedRule2)).toBeRejected();
-			expectAsync(Rule.setRule(messedRule3)).toBeRejected();
-			expectAsync(Rule.setRule(messedRule4)).toBeRejected();
-			expectAsync(Rule.setRule(messedRule5)).toBeRejected();
+			expectAsync(Rule.set(messedRule1)).toBeRejected();
+			expectAsync(Rule.set(messedRule2)).toBeRejected();
+			expectAsync(Rule.set(messedRule3)).toBeRejected();
+			expectAsync(Rule.set(messedRule4)).toBeRejected();
+			expectAsync(Rule.set(messedRule5)).toBeRejected();
 
 			expect(function() {
-				Rule.alterRule(messedRule1.name, messedRule1);
+				Rule.alter(messedRule1.name, messedRule1);
 			}).toThrow();
 			expect(function() {
-				Rule.alterRule(messedRule1.name, messedRule2);
+				Rule.alter(messedRule1.name, messedRule2);
 			}).toThrow();
 			expect(function() {
-				Rule.alterRule(messedRule1.name, messedRule3);
+				Rule.alter(messedRule1.name, messedRule3);
 			}).toThrow();
 			expect(function() {
-				Rule.alterRule(messedRule1.name, messedRule4);
+				Rule.alter(messedRule1.name, messedRule4);
 			}).toThrow();
 			expect(function() {
-				Rule.alterRule(messedRule1.name, messedRule5);
+				Rule.alter(messedRule1.name, messedRule5);
 			}).toThrow();
 
 		});
 
 		it("should not alter, delete or get if rule doesn't already exist", () => {
-			expectAsync(Rule.getRule(compliantRule)).toBeRejected();
-			expectAsync(Rule.getRule(compliantRule1)).toBeRejected();
+			expectAsync(Rule.get(compliantRule)).toBeRejected();
+			expectAsync(Rule.get(compliantRule1)).toBeRejected();
 
-			expectAsync(Rule.deleteRule(compliantRule)).toBeRejected();
-			expectAsync(Rule.deleteRule(compliantRule1)).toBeRejected();
+			expectAsync(Rule.delete(compliantRule)).toBeRejected();
+			expectAsync(Rule.delete(compliantRule1)).toBeRejected();
 
-			expectAsync(Rule.alterRule(compliantRule.name, compliantRule1)).toBeRejected();
+			expectAsync(Rule.alter(compliantRule.name, compliantRule1)).toBeRejected();
 
 		});
 
 		it("should create or set rule if valid", () => {
-			expectAsync(Rule.createRule(compliantRule)).toBeResolved();
-			expectAsync(Rule.createRule(compliantRule1)).toBeResolved();
+			expectAsync(Rule.create(compliantRule)).toBeResolved();
+			expectAsync(Rule.create(compliantRule1)).toBeResolved();
 
-			expectAsync(Rule.setRule(compliantRule)).toBeResolved();
-			expectAsync(Rule.setRule(compliantRule1)).toBeResolved();
+			expectAsync(Rule.set(compliantRule)).toBeResolved();
+			expectAsync(Rule.set(compliantRule1)).toBeResolved();
 		});
 
 		it("should get, alter, or delete rule if existing and valid", () => {
-			expectAsync(Rule.getRule(compliantRule)).toBeResolved();
-			expectAsync(Rule.getRule(compliantRule1)).toBeResolved();
+			expectAsync(Rule.get(compliantRule)).toBeResolved();
+			expectAsync(Rule.get(compliantRule1)).toBeResolved();
 
-			expectAsync(Rule.alterRule(compliantRule.name, compliantRule1)).toBeResolved();
+			expectAsync(Rule.alter(compliantRule.name, compliantRule1)).toBeResolved();
 
-			expectAsync(Rule.deleteRule(compliantRule)).toBeResolved();
-			expectAsync(Rule.deleteRule(compliantRule1)).toBeResolved();
+			expectAsync(Rule.delete(compliantRule)).toBeResolved();
+			expectAsync(Rule.delete(compliantRule1)).toBeResolved();
 		});
 
 	});
