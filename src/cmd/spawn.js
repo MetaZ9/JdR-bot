@@ -25,4 +25,5 @@ module.exports = function(message) {
 			// send help
 		}
 	};
-};*/
+};
+*/

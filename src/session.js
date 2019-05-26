@@ -17,8 +17,6 @@ class Session {
 	constructor() {
 		this.active = false;
 		this.currentRPG = null;
-/******************************** TODO => utiliser une map plutôt, pour avoir pool[id] = obj. Du coup faut revoir le constructeur de PoolItem */
-/******************************** ou pas :grin: */
 		this.pool = {};
 	}
 
@@ -88,6 +86,7 @@ Session.prototype.setObj = function (ItemID, newObj) {
 	this.pool[id].instItem = newObj;
 }
 
+// Mettre dans le utils.js plutôt ?
 // https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
 function hashCode(str) {
 	let h = 0;
