@@ -2,7 +2,7 @@ const AbstractContent = require('./absContent.js');
 const auth = require('./auth.json');
 const Grades = require('./grades.js');
 const {isObject} = require('lodash');
-const Database = require('./database.js');
+const Database = require('./data.js');
 const collectionName = auth.dbCollections.rules;
 
 class Rule extends AbstractContent {
@@ -21,27 +21,27 @@ class Rule extends AbstractContent {
 //*************************************
 
 Rule.prototype.create = function(rule) {
-	return this.createBase(rule, collectionName);
+	return this.create(rule, collectionName);
 };
 
 Rule.prototype.alter = function(name, newRule, resolveNewRule = true) {
-	return this.alterBase(name, newRule, collectionName, resolveNewRule);
+	return this.alter(name, newRule, collectionName, resolveNewRule);
 };
 
 Rule.prototype.get = function(name) {
-	return this.getBase(name, collectionName);
+	return this.get(name, collectionName);
 };
 
 Rule.prototype.getAll = function(params) {
-	return this.getAllBase(params, collectionName);
+	return this.getAll(params, collectionName);
 };
 
 Rule.prototype.set = function(newRule) {
-	return this.setBase(newRule, collectionName);
+	return this.set(newRule, collectionName);
 };
 
 Rule.prototype.delete = function(name) {
-	return this.deleteBase(name, collectionName)
+	return this.delete(name, collectionName)
 };
 
 //*************************************

@@ -1,7 +1,10 @@
 const {prefix} = require("./auth.json");
+const {flatten} = require("lodash");
 const COMMANDS = require("./cmd/index.js");
 const Rule = require("./rule.js");
 
+// Function parse
+// Effet : 
 function parse(message) {
 	let {content} = message;
 	if (!content.startsWith(prefix)) {
@@ -16,16 +19,18 @@ function parse(message) {
 	let args = realContent.replace(command, "").split(/\s+/);
 	return determineCommandSource(command).then((cmd, isCustomCommand) => {
 		if (isCustomCommand) {
-			applyRule(cmd, args, message).then(() => {
-				Promise.resolve();
-			});
+			applyRule(cmd, args, message);
 		} else {
 			cmd(message).apply(null, args);
-			Promise.resolve();
 		}
 	});
 };
 
+// Function determineCommandSource
+// Effet : déterminer d'où provient la commande (si c'est une rule user-defined ou si c'est un preset)
+// Arguments :
+// ** String command : le nom de la commande à rechercher
+// Valeur de retour : instance de Rule
 function determineCommandSource(command) {
 	return new Promise((resolve, reject) => {
 		if (command in COMMANDS) {
@@ -42,16 +47,39 @@ function determineCommandSource(command) {
 	});
 };
 
+
+// Function applyRule
+// Effet : Appliquer une règle. Si cette règle est liée à une autre, continuer avec l'autre jusqu'à cul-de-sac
+// Arguments :
+// ** Rule rule : instance de Rule dont les propriétés sont le callback à exécuter,
+// *** String ruleName : nom de la rule, propriété indispensable qui sera la cible du callback de la rule précédente
+// *** Object core : la série d'instructions à exécuter pour un core donné
+// *** String callback : dès qu'on a fini d'appliquer la rule, par quelle rule faire suivre.
+// **** Si callback est vide, terminer le cycle, sinon, continuer.
+// ---------------------------------------------------------------
+// ** Array args : tableau d'arguments séparés par des espaces, fournis avec le message parsé
+// ---------------------------------------------------------------
+// ** Message message : instance de message Discord. Fournira les retours du bot.
+// Valeur de retour : Promise<Array<Message>>
+
 function applyRule(rule, args, message) {
 	return new Promise((resolve, reject) => {
-		// re-curse-ive
-		Rule.getRule(rule.name).then(RULE => { // j'avais besoin d'un autre nom que de rule D:
-			if (rule.callback) {
-				let fct = parseCore(rule.ruleCore);
-				fct(args, message);
-				applyRule(RULE.callback, args, message);
-			}
+		let messages = [];
+		if (rule.name) {
+			Rule.getRule(rule.name).then(RULE => { // j'avais besoin d'un autre nom que de rule D:
+				if (RULE.callback) {
+					let fct = parseCore(RULE.ruleCore);
+					fct(args, messages);
+					applyRule(RULE.callback, args, message);
+				}
+			});
+		}
+		const preparedMessages = messages.map(msg => {
+			return message.channel.send(msg).then(() => {
+				cooldown();
+			});
 		});
+		return Promise.all(preparedMessages);
 	});
 };
 
@@ -60,5 +88,14 @@ function parseCore(core) {
 
 	}; // TBD
 };
+
+function cooldown() {
+	const msDuration = 700;
+	return new Promise((res, rej) => {
+		setTimeout(() => {
+			res();
+		}, msDuration);
+	});
+}
 
 module.exports = parse;

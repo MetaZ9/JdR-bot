@@ -193,38 +193,6 @@ function parse(token) {
 }
 
 
-function throwDices(diceNb, diceFaces, againstStat, mod, threshold) {						//throwDices(diceNb, diceFaces, againstStat, for, mod, threshold)
-	if (againstStat !== null || againstStat !== undefined /*not sure of which one*/) {
-		if (currentRPG === null)
-			return; //error
-
-		//check if stat exists in the ruleset and his integer
-		//or simply check for character.stats.againstStat
-
-		//againstStat = chatacter.statMods.againstStat
-	}
-
-	let numbers = [];
-	let sum = 0;
-	let mean = 0;
-	const minValue = 1;			//either that ou on simplifie la formule de génération des nombres
-
-	//generate numbers
-	for (var i = 0; i < diceNb + 1; i++) {
-		numbers[i] = Math.floor(Math.random()*(diceFaces+1 - minValue)) + minValue + mod + (againstStat || 0);
-		sum += numbers[i];
-		mean += (numbers[i] - mean)/(i + 1);
-	}
-
-	if (threshold === null)
-		return; //send message
-
-	let isSuccess = sum >= threshold;		//si on rajoute l'amélioration sur threshold, il faudra utiliser un truc du genre compare(a, b, operator)
-
-	return; //send message
-}
-
-function applyRule(rule)
-{
-
-}
+// here lies Jason's beloved throwDice function, brutally murdered by Agent 47
+// c'est vraiment trop triiiiiiiste
+// rip

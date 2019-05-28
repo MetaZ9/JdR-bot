@@ -1,16 +1,9 @@
 class PoolItem {
 	constructor(name, instItem, type) {
-		this.id = this.generateID(type, name);
 		this.instanceName = name;
-		this.ItemType = type;
+		this.itemType = type;
 		this.instItem = instItem;
 	}
-
-	generateID(type, name) {
-		//generate hash
-		return hashCode(hashCode(type).toString() + hashCode(name).toString());
-	}
-
 }
 
 class Session {
@@ -19,7 +12,6 @@ class Session {
 		this.currentRPG = null;
 		this.pool = {};
 	}
-
 }
 
 Session.prototype.toggleActive = function() {
@@ -32,11 +24,12 @@ Session.prototype.setCurrentRPG = function(rpgName) {
 	// set auth.db values ? ou un truc du genre
 };
 
-Session.prototype.addItem = function(id, newItem, ItemType) {
-	this.pool[id] = new PoolItem(id, newItem, ItemType);
+Session.prototype.addItem = function(itemName, itemType) {
+	const hash = generateID(itemType, itemName);
+	this.pool[hash] = new PoolItem(itemName, itemType);
 };
 
-Session.prototype.removeItem = function(id, ItemType) {
+Session.prototype.removeItem = function(id) {
 	if (id in this.pool) {
 		delete this.pool[id];
 	} else {
@@ -79,14 +72,15 @@ Session.prototype.get = function(id) {
 }
 
 Session.prototype.setProp = function(id, prop, value) {
-	this.pool[id].instItem[prop] = value;
+	this.get(id).instItem[prop] = value;
 }
 
 Session.prototype.setObj = function (ItemID, newObj) {
-	this.pool[id].instItem = newObj;
+	this.get(ItemID).instItem = newObj;
 }
 
 // Mettre dans le utils.js plutôt ?
+// Quel utils.js õ_ô ?
 // https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
 function hashCode(str) {
 	let h = 0;
@@ -94,6 +88,11 @@ function hashCode(str) {
 		h = Math.imul(31, h) + str.charCodeAt(i) | 0;
 	}
 	return h;
+};
+
+function generateID(type, name) {
+	//generate hash
+	return hashCode(hashCode(type).toString() + hashCode(name).toString());
 };
 
 module.exports = new Session();

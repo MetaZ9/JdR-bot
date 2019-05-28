@@ -13,23 +13,23 @@ class RPGHandler extends AbstractContent {
 //*************************************
 
 RPGHandler.prototype.create = function(params) {
-	return this.createBase(params, rpgsCollection);
+	return this.create(params, rpgsCollection);
 };
 
 RPGHandler.prototype.alter = function(name, newRPG, resolveNewContent) {
-	return this.alterBase(name, newRPG, rpgsCollection, resolveNewContent);
+	return this.alter(name, newRPG, rpgsCollection, resolveNewContent);
 };
 
 RPGHandler.prototype.get = function(name) {
-	return this.getBase(name, rpgsCollection);
+	return this.get(name, rpgsCollection);
 };
 
 RPGHandler.prototype.delete = function(name) {
-	return this.deleteBase(name, rpgsCollection);
+	return this.delete(name, rpgsCollection);
 };
 
 RPGHandler.prototype.set = function(name) {
-	return this.setBase(name, rpgsCollection);
+	return this.set(name, rpgsCollection);
 };
 
 //*************************************

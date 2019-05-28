@@ -14,27 +14,27 @@ class Content extends AbstractContent {
 //*************************************
 
 Content.prototype.alter = function(name, newContent, resolveNewContent = true) {
-	return this.alterBase(name, newContent, collectionName, resolveNewContent);
+	return this.alter(name, newContent, collectionName, resolveNewContent);
 };
 
 Content.prototype.create = function(content) {
-	return this.createBase(content, collectionName);
+	return this.create(content, collectionName);
 };
 
 Content.prototype.delete = function(name) {
-	return this.deleteBase(name, collectionName);
+	return this.delete(name, collectionName);
 };
 
 Content.prototype.get = function(name) {
-	return this.getBase(name, collectionName);
+	return this.get(name, collectionName);
 };
 
 Content.prototype.getAll = function(params) {
-	return this.getAllBase(params, collectionName);
+	return this.getAll(params, collectionName);
 };
 
 Content.prototype.set = function(newContent) {
-	return this.setBase(newContent, collectionName);
+	return this.set(newContent, collectionName);
 };
 
 //*************************************
