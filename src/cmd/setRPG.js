@@ -1,3 +1,5 @@
 const session = require('./session.js');
 
-module.exports = session.setRPG.bind(session, rpgName);
+module.exports = function(rpgName) {
+	return session.setRPG(rpgName);
+};
