@@ -1,6 +1,6 @@
 const {owner, gm} = require("./../auth.json");
 const {flatten} = require("lodash");
-const {DMChannel} = require("discord.js");
+const {MessageCollector, DMChannel} = require("discord.js");
 
 //add RPG element to session pool
 //args
@@ -10,6 +10,7 @@ const {DMChannel} = require("discord.js");
 function addPoolObject(contentType, contentName, poolName) {
 	// fetch content type from database
 	// if needed, ask for characteristics (couple de param-values) -> truc comme le search de rythm, je sais pas du tout comment faire ça x')
+	// UN MESSAGE COLLECTOR OUIIIII
 	// add final object to session pool
 
 	// send message with name & poolID

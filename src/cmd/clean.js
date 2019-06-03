@@ -1,3 +1,3 @@
-const session = require('./session.js')
+const session = require('./../session.js')
 
 module.exports = session.cleanSessionPool;

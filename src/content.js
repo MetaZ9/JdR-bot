@@ -42,9 +42,6 @@ Content.prototype.set = function(newContent) {
 //*************************************
 
 //********************* Nani ?
-Content.prototype.formatContent = function(content) {
-	return this.format(content);
-};
 
 Content.prototype.format = function(content) {
 	let copy = {...content};
@@ -54,6 +51,7 @@ Content.prototype.format = function(content) {
 	return copy;
 };
 //********************* Fin Nani ?
+// https://fr.wikipedia.org/wiki/Nani :rolling_eyes: :gun: :door:
 
 Content.prototype.fetchProperties = function() {
 	return this.ruleDefinedVars;

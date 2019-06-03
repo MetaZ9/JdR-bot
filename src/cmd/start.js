@@ -1,4 +1,4 @@
-const client = require("./client.js");
+const client = require("./../database.js");
 
 module.exports = function(load) {
 	return new Promise((resolve, reject) => {

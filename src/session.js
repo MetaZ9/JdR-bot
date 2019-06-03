@@ -1,3 +1,5 @@
+const DataProvider = require("./dataProvider.js");
+
 class PoolItem {
 	constructor(name, instItem, type) {
 		this.instanceName = name;
@@ -19,9 +21,6 @@ Session.prototype.toggleActive = function() {
 };
 
 Session.prototype.setCurrentRPG = function(rpgName) {
-	// check if rpg exists
-	// currentRPG = rpgName
-	// set auth.db values ? ou un truc du genre
 };
 
 Session.prototype.addItem = function(itemName, itemType) {

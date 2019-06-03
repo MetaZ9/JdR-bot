@@ -28,6 +28,8 @@ AbstractContent.prototype.alter = function(name, newContent, collectionName, res
 			resolve(content);
 			// https://docs.mongodb.com/manual/reference/method/db.getCollection.findAndModify/#db.getCollection.findAndModify
 			// applying "true" to the "new" parameter forces mongodb to return the updated document
+			// fut un temps où je faisais le sérieux à mettre des commentaires en anglais
+			// لا تحاول أن تترجم هذه الكتابة  و إلا ستندم
 		});
 	});
 };
@@ -63,10 +65,7 @@ AbstractContent.prototype.get = function(contentName, collectionName) {
 //Est-ce qu'on ferait pas un query manager ? Je pense que ça sera le mieux
 AbstractContent.prototype.getAll = function(params, collectionName) {
 	return new Promise((resolve, reject) => {
-		Database.db(auth.dbName).collection(collectionName).find(params).then((error, contents) => {
-			if (error) {
-				throw error;
-			}
+		Database.db(auth.dbName).collection(collectionName).find(params).toArray().then(content) => {
 			resolve(contents);
 		});
 	});
@@ -95,6 +94,8 @@ AbstractContent.prototype.format = function(content) {
 	copy._id = name;
 	return copy;
 };
+
 AbstractContent.prototype.format = AbstractContent.prototype.format;
+// WTF ?
 
 module.exports = AbstractContent;

@@ -1,3 +1,5 @@
-const content = require('./content.js');
+const content = require('./../content.js');
 
-module.exports = content.bind(null, contentType, contentName);
+module.exports = function(contentType, contentName) {
+	return content.delete.bind(content, contentType, contentName);
+};
