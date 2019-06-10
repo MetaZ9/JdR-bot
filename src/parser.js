@@ -16,7 +16,7 @@ function parse(message) {
 		return; // le bot ne va pas réagir
 	}
 	let [command] = matchedCommand;
-	let args = realContent.replace(command, "").split(/\s+/);
+	let args = getArgs(realContent.replace(command, ""));
 	return determineCommandSource(command).then((cmd, isCustomCommand) => {
 		if (isCustomCommand) {
 			applyRule(cmd, args, message);
@@ -40,11 +40,29 @@ function determineCommandSource(command) {
 				if (rule) {
 					resolve(rule, true);
 				} else {
-					throw new Error(`${command} command is unknown.`);
+					reject(`${command} command is unknown.`);
 				}
 			});
 		}
 	});
+};
+
+function getArgs(str) {
+	let spacedArguments = str.match(/['"].+?['"]/g);
+	let holderStr = str;
+	let args = [];
+	if (spacedArguments) {
+		for (let arg of spacedArguments) {
+			holderStr = str.replace(arg, "");
+		}
+		spacedArguments = spacedArguments.map(arg => arg.replace(/['"]/g, ""));
+		args = args.concat(spacedArguments);
+	}
+	let classicArguments = holderStr.match(/ +/g);
+	if (classicArguments) {
+		args = args.concat(classicArguments);
+	}
+	return args.sort((arg1, arg2) => str.indexOf(arg1) - str.indexOf(arg2));
 };
 
 
@@ -57,7 +75,7 @@ function determineCommandSource(command) {
 // *** String callback : dès qu'on a fini d'appliquer la rule, par quelle rule faire suivre.
 // **** Si callback est vide, terminer le cycle, sinon, continuer.
 // ---------------------------------------------------------------
-// ** Array args : tableau d'arguments séparés par des espaces, fournis avec le message parsé
+// ** Array args : tableau d'arguments séparés par des espaces ou délimités par des guillemets, fournis avec le message parsé
 // ---------------------------------------------------------------
 // ** Message message : instance de message Discord. Fournira les retours du bot.
 // Valeur de retour : Promise<Array<Message>>
