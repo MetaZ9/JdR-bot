@@ -47,13 +47,20 @@ function determineCommandSource(command) {
 	});
 };
 
-function getArgs(str) {
-	let spacedArguments = str.match(/['"].+?['"]/g);
-	let holderStr = str;
+// function getArgs
+// Rôle: suivant une commande donnée, extraire ses arguments
+// Arguments:
+// ** String content: Le message, moins le g!<commande>
+// Valeur de retour: Array<String>
+// Tableau contenant les arguments et leurs valeurs, ordonnés par ordre d'apparition dans le message original.
+
+function getArgs(content) {
+	let spacedArguments = content.match(/['"].+?['"]/g);
+	let holderStr = content;
 	let args = [];
 	if (spacedArguments) {
 		for (let arg of spacedArguments) {
-			holderStr = str.replace(arg, "");
+			holderStr = holderStr.replace(arg, "");
 		}
 		spacedArguments = spacedArguments.map(arg => arg.replace(/['"]/g, ""));
 		args = args.concat(spacedArguments);
@@ -62,7 +69,7 @@ function getArgs(str) {
 	if (classicArguments) {
 		args = args.concat(classicArguments);
 	}
-	return args.sort((arg1, arg2) => str.indexOf(arg1) - str.indexOf(arg2));
+	return args.sort((arg1, arg2) => content.indexOf(arg1) - content.indexOf(arg2));
 };
 
 
@@ -108,7 +115,7 @@ function parseCore(core) {
 };
 
 function cooldown() {
-	const msDuration = 700;
+	const msDuration = 950;
 	return new Promise((res, rej) => {
 		setTimeout(() => {
 			res();

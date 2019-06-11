@@ -34,8 +34,8 @@ AbstractContent.prototype.alter = function(name, newContent, collectionName, res
 	});
 };
 
-AbstractContent.prototype.set = function(content, collectionName) {
-	const toInsert = this.format(content);
+AbstractContent.prototype.set = function(content, collectionName, customProps) {
+	const toInsert = this.format(content, customProps || {});
 	return new Promise((resolve, reject) => {
 		Database.db(auth.dbName).collection(collectionName).insertOne(toInsert).then((error, inserted) => {
 			resolve(inserted);
@@ -87,15 +87,20 @@ AbstractContent.prototype.delete = function(name, collectionName) {
 
 //							------ TODO ------
 //********************************** Presque sûr que ça ne devrait pas exister ici (ou en tous cas pas dans cette version)
-AbstractContent.prototype.format = function(content) {
+AbstractContent.prototype.format = function(content, customProps) {
 	let copy = {...content};
 	let {name} = copy;
 	delete copy.name;
 	copy._id = name;
+	for (let prop in customProps) {
+		if (prop in copy) {
+			// do nothing
+			// on ne veut pas overwrite des propriétés valides par erreur
+		} else {
+			copy[prop] = customProps[prop];
+		}
+	}
 	return copy;
 };
-
-AbstractContent.prototype.format = AbstractContent.prototype.format;
-// WTF ?
 
 module.exports = AbstractContent;

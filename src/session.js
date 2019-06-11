@@ -21,6 +21,12 @@ Session.prototype.toggleActive = function() {
 };
 
 Session.prototype.setCurrentRPG = function(rpgName) {
+	let rpg = DataProvider.rpgs[rpgName];
+	if (rpg) {
+		this.currentRPG = rpg;
+	} else {
+		throw new Error(`Requested non-existent RPG with title "${rpgName}".`);
+	}
 };
 
 Session.prototype.addItem = function(itemName, itemType) {

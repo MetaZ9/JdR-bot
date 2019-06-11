@@ -33,8 +33,8 @@ Content.prototype.getAll = function(params) {
 	return this.getAll(params, collectionName);
 };
 
-Content.prototype.set = function(newContent) {
-	return this.set(newContent, collectionName);
+Content.prototype.set = function(newContent, customProps) {
+	return this.set(newContent, collectionName, customProps);
 };
 
 //*************************************
