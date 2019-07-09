@@ -12,5 +12,6 @@ module.exports = {
 	setRPG: require("./setRPG.js"),
 	spawn: require("./spawn.js"),
 	start: require("./start.js"),
-	throw: require("./die.js")
+	throw: require("./die.js"),
+	help: require("./help.js")
 };

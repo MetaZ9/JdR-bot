@@ -1,0 +1,9 @@
+{
+	"add": {
+		"name": "add",
+		"syntax": "",
+		"shortDesc": "Ajoute un nouveau contenu au JdR /!\\ N'ajoute pas un élément à la session en cours",
+		"longDesc": "Blablabla",
+		"exemple": ""
+	}
+}
