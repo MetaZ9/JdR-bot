@@ -7,15 +7,24 @@ function sendHelp(command)
 {
 	helpingString = command ? prepareDetailedHelp(command) : prepareCommandList();
 	sendHelpMessage(helpingString);
+	//Est-ce que je pousse le vice jusqu'au bout en faisant sendHelpMessage(command ? prepareDetailedHelp(command) : prepareCommandList()); :} ?
 }
 
 function prepareCommandList()
 {
-	for (var command in CmdIndex)
+	for (var helpCommand in helpMessageList)
 	{
-		var currentCommand = helpMessageList[command];
-		helpMessages.push({name: currentCommand.name, desc: currentCommand.shortDesc});
+		helpMessages.push({name: helpCommand.name, desc: helpCommand.shortDesc});
 	}
+
+}
+
+function prepareDetailedHelp(command)
+{
+	if (!command)
+		return;						//should not be here => error | Pas nécessaire, juste pour test au début
+
+	helpMessages.push(helpMessageList[command]);
 }
 
 module.exports = sendHelp;
