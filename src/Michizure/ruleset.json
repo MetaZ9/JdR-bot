@@ -23,11 +23,15 @@
 				"mental" : "Integer -5 10",
 				"perception" : "Integer -5 10"
 			},
-			"inventory" : "Item|Integer 0 false|Integer 0 false",
-			"money" : "Integer 0 false",
+			"inventory" : "InventoryItem[]",
+			"money" : "Integer 0 infinity",
 			"companion" : "Companion"
 		},
-
+    "InventoryItem": {
+      "item": "Item",
+      "currentQuantity": "Integer 0 inf",
+      "usesLeft": "Integer 0 inf"
+    },
 		"Species" : {
 			"name" : "String",
 			"stats" : {
@@ -150,16 +154,46 @@
 		},
 
 	},
-	"useMove" : {
-		"idHidden" : "false",
-		"minGrade" : "1",
+  "useMove": {
+    "checkPrecision": {
+      
+    }
+  },
+  "useMove/checkPrecision": {
+    "isHidden": false,
+    "minGrade": 1,
+    "captures": {
+    	"dice": "1 5",
+    	"accDice" : "^dice 1 5"
+  	},
+    "behaviors": {
+      //"dice": "1 5"
+      "dice": "1 5 accDice",
+      "check": "#accDice + @sender.pokemon.@pokeName.stats.physicalAccuracy > @targetName.physicalEvasion",
+      "branch": "!useMove/runMove ~ continue"
+    },
+    "callbacks": {
+      "success": "@pokeName a réussi sa frappe !",
+      "failure": "@pokeName a foncé droit dans le mur !"
+    }
+  },
+	"useMove/captureContext" : {
+		"idHidden" : false,
+		"minGrade" : 1,
 		"ruleCore" : {
-			"caputres" : {
-				"a" : "move."
+			"captures" : {
+				"user" : "@sender.pokemon.@pokeName",
+				"target" : "@targetName",
+				"move" : "@sender.pokemon.@pokeName.moves.@move"
+			},
+			"behaviors" : {
+				"check" : "#move.applyPrecision()",
+				"branch" : "!useMove/checkPrecision ~continue"
 			}
 		},
 		"callbacks" : {
-			
+      "success": "",
+      "failure": ""
 		}
 	}
 }
