@@ -1,4 +1,4 @@
-const Database = require('./data.js');
+const Database = require('./database.js');
 const auth = require('./auth.json');
 
 class AbstractContent {
@@ -13,21 +13,15 @@ AbstractContent.prototype.create = function(content, collection) {
 	return this.set(content, collection);
 };
 
-AbstractContent.prototype.alter = function(name, newContent, collectionName, resolveNewContent = true) {
+AbstractContent.prototype.alter = function(name, newContent, collectionName, returnOriginalDocument = false) {
 	this.validate(newContent);
 	return new Promise((resolve, reject) => {
 		let newObject = this.format(newContent);
 		newObject._id = name;
 
-		Database.db(auth.dbName).collection(collectionName).findOneAndReplace({_id: name}, newObject, {returnNewDocument: resolveNewContent})
-		.then((error, content) => {
-			if (error) {
-				throw error;
-			}
-
+		Database.db(auth.dbName).collection(collectionName).findOneAndReplace({_id: name}, newObject, {returnOriginal: returnOriginalDocument})
+		.then((content) => {
 			resolve(content);
-			// https://docs.mongodb.com/manual/reference/method/db.getCollection.findAndModify/#db.getCollection.findAndModify
-			// applying "true" to the "new" parameter forces mongodb to return the updated document
 			// fut un temps où je faisais le sérieux à mettre des commentaires en anglais
 			// لا تحاول أن تترجم هذه الكتابة  و إلا ستندم
 		});
@@ -64,8 +58,9 @@ AbstractContent.prototype.get = function(contentName, collectionName) {
 //J'ai juste fait ça pour que ça marche, faudra complètement la repenser x)
 //Est-ce qu'on ferait pas un query manager ? Je pense que ça sera le mieux
 AbstractContent.prototype.getAll = function(params, collectionName) {
+	console.log({ Database });
 	return new Promise((resolve, reject) => {
-		Database.db(auth.dbName).collection(collectionName).find(params).toArray().then(content) => {
+		Database.db(auth.dbName).collection(collectionName).find(params).toArray().then(content => {
 			resolve(contents);
 		});
 	});
